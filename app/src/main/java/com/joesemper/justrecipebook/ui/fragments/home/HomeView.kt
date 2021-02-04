@@ -8,8 +8,6 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface HomeView: MvpView {
-
-
     fun init()
     fun updateList()
     fun showResult(text: String)

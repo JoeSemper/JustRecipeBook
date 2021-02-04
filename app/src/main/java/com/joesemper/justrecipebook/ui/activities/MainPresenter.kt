@@ -16,6 +16,19 @@ class MainPresenter : MvpPresenter<MainView>() {
         router.replaceScreen(Screens.HomeScreen())
     }
 
+    fun onHomeClicked(): Boolean {
+        router.navigateTo(Screens.HomeScreen())
+        return true
+    }
+
+    fun onCategoriesClicked(): Boolean {
+        return false
+    }
+
+    fun onFavoriteClicked(): Boolean {
+        return false
+    }
+
     fun backClicked() {
         router.exit()
     }

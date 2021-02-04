@@ -21,10 +21,10 @@ class MealsRVAdapter(val presenter: IMealsListPresenter) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer, MealItemView {
 
-            override var pos = -1
+        override var pos = -1
 
         override fun setMealName(text: String) = with(containerView) {
-            tv_meal_title.text = text
+            tv_meal_header.text = text
         }
 
         override fun loadImage(url: String) = with(containerView) {
@@ -39,7 +39,7 @@ class MealsRVAdapter(val presenter: IMealsListPresenter) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
-        holder.containerView.setOnClickListener {presenter.itemClickListener?.invoke(holder)}
+        holder.containerView.setOnClickListener { presenter.itemClickListener?.invoke(holder) }
         presenter.bindView(holder)
     }
 

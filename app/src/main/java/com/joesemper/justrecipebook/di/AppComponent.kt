@@ -5,6 +5,8 @@ import com.joesemper.justrecipebook.ui.activities.MainActivity
 import com.joesemper.justrecipebook.ui.activities.MainPresenter
 import com.joesemper.justrecipebook.ui.adapters.meals.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.home.HomePresenter
+import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
+import com.joesemper.justrecipebook.ui.fragments.meal.MealPresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -25,5 +27,7 @@ interface AppComponent {
     fun inject(mainPresenter: MainPresenter)
     fun inject(homePresenter: HomePresenter)
     fun inject(mealsRVAdapter: MealsRVAdapter)
+    fun inject(mealPresenter: MealPresenter)
+    fun inject(mealFragment: MealFragment)
 
 }

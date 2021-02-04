@@ -1,5 +1,6 @@
 package com.joesemper.justrecipebook.data.network.api
 
+import com.joesemper.justrecipebook.data.network.model.Categories
 import com.joesemper.justrecipebook.data.network.model.Meals
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
@@ -19,5 +20,8 @@ interface IDataSource {
 
     @GET("filter.php?")
     fun getMealsByCategory(@Query("c") category: String) : Single<Meals>
+
+    @GET("categories.php")
+    fun getAllCategories(): Single<Categories>
 
 }

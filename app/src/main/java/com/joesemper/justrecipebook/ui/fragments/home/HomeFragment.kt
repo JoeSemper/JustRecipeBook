@@ -52,7 +52,8 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     }
 
     private fun initRV() {
-        rv_meals.layoutManager = GridLayoutManager(context, 2)
+        rv_meals.layoutManager = GridLayoutManager(context, 3)
+        rv_meals.setHasFixedSize(true)
         adapter = MealsRVAdapter(presenter.mealsListPresenter).apply {
             App.instance.appComponent.inject(this)
         }
