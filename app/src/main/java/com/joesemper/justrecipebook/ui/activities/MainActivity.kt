@@ -33,7 +33,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         bottom_nav.setOnNavigationItemSelectedListener { menuItem ->
             if (menuItem.isChecked) {
-                return@setOnNavigationItemSelectedListener false
+                return@setOnNavigationItemSelectedListener true
             }
             when (menuItem.itemId) {
                 R.id.navigation_home -> presenter.onHomeClicked()

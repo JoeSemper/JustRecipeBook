@@ -1,5 +1,8 @@
 package com.joesemper.justrecipebook.ui.fragments.home
 
+import android.app.DownloadManager
+import android.util.Log
+import com.joesemper.justrecipebook.BuildConfig.DEBUG
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Meal
 import com.joesemper.justrecipebook.ui.adapters.meals.IMealsListPresenter
@@ -45,15 +48,24 @@ class HomePresenter: MvpPresenter<HomeView>() {
         setOnClickListeners()
     }
 
+    fun onSearch(query: String?) {
+        dataManager.searchMealByName(query)
+            .observeOn(mainThreadScheduler)
+            .subscribe({ meals ->
+                updateMealsList(meals)
+
+            }, {
+                log(it)
+            })
+    }
+
     private fun loadData() {
         dataManager.getMealByCategory("Seafood")
             .observeOn(mainThreadScheduler)
             .subscribe({meals ->
-                mealsListPresenter.meals.clear()
-                mealsListPresenter.meals.addAll(meals)
-                viewState.updateList()
+                updateMealsList(meals)
             }, {
-                viewState.showResult(it.message.toString())
+                log(it)
             })
     }
 
@@ -66,6 +78,18 @@ class HomePresenter: MvpPresenter<HomeView>() {
 
     private fun getScreenByPosition(pos: Int): Screen {
         return Screens.MealScreen(mealsListPresenter.meals[pos])
+    }
+
+    private fun updateMealsList(meals: List<Meal>) {
+        mealsListPresenter.meals.clear()
+        mealsListPresenter.meals.addAll(meals)
+        viewState.updateList()
+    }
+
+    private fun log(throwable: Throwable) {
+        if(DEBUG) {
+            Log.v("Meals", throwable.message.toString())
+        }
     }
 
 

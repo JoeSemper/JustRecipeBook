@@ -10,5 +10,5 @@ interface DataManager {
     fun getMealByCategory(category: String) : Single<List<Meal>>
     fun getAllCategories(): Single<List<Category>>
     fun getSingleRandomMeal(): Single<Meal>
-    fun searchMealByName(query: String): Single<List<Meal>>
+    fun searchMealByName(query: String?): Single<List<Meal>>
 }

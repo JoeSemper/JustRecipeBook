@@ -10,6 +10,6 @@ interface MealView: MvpView {
     fun updateList()
     fun setTitle(title: String)
     fun setImage(url: String)
-    fun setIngredients(ingredients : List<String>)
     fun setInstructions(instruction: String)
+    fun setRegion(region: String)
 }

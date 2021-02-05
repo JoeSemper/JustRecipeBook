@@ -13,6 +13,7 @@ import com.joesemper.justrecipebook.ui.adapters.ingredients.IngredientsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_meal.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -58,17 +59,22 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         imageLoader.loadInto(url, iv_meal_image)
     }
 
-    override fun setIngredients(ingredients: List<String>) {
-
+    override fun setRegion(region: String) {
+        tv_region.text = region
     }
+
 
     override fun setInstructions(instruction: String) {
         tv_meal_instruction.text = instruction
     }
 
     override fun init() {
-        App.instance.appComponent.inject(this)
+        executeInjection()
         initRV()
+    }
+
+    private fun executeInjection() {
+        App.instance.appComponent.inject(this)
     }
 
     private fun initRV(){

@@ -4,24 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
-import com.joesemper.justrecipebook.data.AppDataManager
-import com.joesemper.justrecipebook.data.network.model.Meal
-import com.joesemper.justrecipebook.data.network.model.Meals
 import com.joesemper.justrecipebook.ui.adapters.meals.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
-import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
 class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
@@ -48,7 +40,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
     override fun init() {
         initRV()
-
+        initSearch()
     }
 
     private fun initRV() {
@@ -60,12 +52,19 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         rv_meals.adapter = adapter
     }
 
+    private fun initSearch() {
+        val listener: SearchView.OnQueryTextListener = QueryListener(presenter)
+        search_view.setOnQueryTextListener(listener)
+
+
+        search_view.setOnSearchClickListener {
+            presenter.onSearch(search_view.query.toString())
+        }
+    }
 
     override fun updateList() {
         adapter?.notifyDataSetChanged()
     }
-
-
 
     override fun showResult(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -73,7 +72,15 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
     override fun backPressed(): Boolean = presenter.backPressed()
 
+    private class QueryListener(val presenter: HomePresenter) : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            presenter.onSearch(query)
+            return true
+        }
 
-
-
+        override fun onQueryTextChange(newText: String?): Boolean {
+            presenter.onSearch(newText)
+            return true
+        }
+    }
 }

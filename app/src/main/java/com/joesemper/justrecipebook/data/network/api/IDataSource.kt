@@ -13,7 +13,7 @@ interface IDataSource {
     fun getMealById(@Query("i") id: String) : Single<Meals>
 
     @GET("search.php?")
-    fun searchMealsByName(@Query("s") name: String) : Single<Meals>
+    fun searchMealsByName(@Query("s") name: String?) : Single<Meals>
 
     @GET("random.php")
     fun getSingleRandomMeal() : Single<Meals>

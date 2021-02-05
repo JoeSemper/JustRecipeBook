@@ -11,5 +11,5 @@ interface ApiManager {
     fun getMealsByCategory(category: String): Single<List<Meal>>
     fun getAllCategories(): Single<List<Category>>
     fun getSingleRandomMeal(): Single<Meal>
-    fun searchMealsByName(query: String): Single<List<Meal>>
+    fun searchMealsByName(query: String?): Single<List<Meal>>
 }

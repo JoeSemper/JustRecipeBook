@@ -19,6 +19,6 @@ class AppDataManager(val apiManager: ApiManager): DataManager {
     override fun getSingleRandomMeal(): Single<Meal> =
         apiManager.getSingleRandomMeal()
 
-    override fun searchMealByName(query: String): Single<List<Meal>> =
+    override fun searchMealByName(query: String?): Single<List<Meal>> =
         apiManager.searchMealsByName(query)
 }

@@ -13,7 +13,6 @@ class ApiHolder(val api: IDataSource) : ApiManager {
         return api.getMealById(id).flatMap { meals ->
             Single.fromCallable {
                 mapIngredientsToList(meals.meals[0])
-//                meals.meals[0]
             }
         }.subscribeOn(Schedulers.io())
     }
@@ -38,12 +37,11 @@ class ApiHolder(val api: IDataSource) : ApiManager {
         return api.getSingleRandomMeal().flatMap { meals ->
             Single.fromCallable {
                 mapIngredientsToList(meals.meals[0])
-//                meals.meals[0]
             }
         }.subscribeOn(Schedulers.io())
     }
 
-    override fun searchMealsByName(query: String): Single<List<Meal>> {
+    override fun searchMealsByName(query: String?): Single<List<Meal>> {
         return api.searchMealsByName(query).flatMap { meals ->
             Single.fromCallable {
                 meals.meals.toList()
@@ -54,80 +52,38 @@ class ApiHolder(val api: IDataSource) : ApiManager {
     private fun mapIngredientsToList(meal: Meal): Meal {
         with(meal) {
             ingredients = mutableListOf()
-            if (checkNull(strIngredient1)) {
-                ingredients.add(Ingredient(strIngredient1, strMeasure1))
-            }
-            if (checkNull(strIngredient2)) {
-                ingredients.add(Ingredient(strIngredient2, strMeasure2))
-            }
-            if (checkNull(strIngredient3)) {
-                ingredients.add(Ingredient(strIngredient3, strMeasure3))
-            }
-            if (checkNull(strIngredient4)) {
-                ingredients.add(Ingredient(strIngredient4, strMeasure4))
-            }
-            if (checkNull(strIngredient5)) {
-                ingredients.add(Ingredient(strIngredient5, strMeasure5))
-            }
-            if (checkNull(strIngredient6)) {
-                ingredients.add(Ingredient(strIngredient6, strMeasure6))
-            }
-            if (checkNull(strIngredient7)) {
-                ingredients.add(Ingredient(strIngredient7, strMeasure7))
-            }
-            if (checkNull(strIngredient8)) {
-                ingredients.add(Ingredient(strIngredient8, strMeasure8))
-            }
-            if (checkNull(strIngredient9)) {
-                ingredients.add(Ingredient(strIngredient9, strMeasure9))
-            }
-            if (checkNull(strIngredient10)) {
-                ingredients.add(Ingredient(strIngredient10, strMeasure10))
-            }
-            if (checkNull(strIngredient11)) {
-                ingredients.add(Ingredient(strIngredient11, strMeasure11))
-            }
-            if (checkNull(strIngredient12)) {
-                ingredients.add(Ingredient(strIngredient12, strMeasure12))
-            }
-            if (checkNull(strIngredient13)) {
-                ingredients.add(Ingredient(strIngredient13, strMeasure13))
-            }
-            if (checkNull(strIngredient14)) {
-                ingredients.add(Ingredient(strIngredient14, strMeasure14))
-            }
-            if (checkNull(strIngredient15)) {
-                ingredients.add(Ingredient(strIngredient15, strMeasure15))
-            }
-            if (checkNull(strIngredient16)) {
-                ingredients.add(Ingredient(strIngredient16, strMeasure16))
-            }
-            if (checkNull(strIngredient17)) {
-                ingredients.add(Ingredient(strIngredient17, strMeasure17))
-            }
-            if (checkNull(strIngredient18)) {
-                ingredients.add(Ingredient(strIngredient18, strMeasure18))
-            }
-            if (checkNull(strIngredient19)) {
-                ingredients.add(Ingredient(strIngredient19, strMeasure19))
-            }
-            if (checkNull(strIngredient20)) {
-                ingredients.add(Ingredient(strIngredient20, strMeasure20))
-            }
 
-
+            addIngredientToList(meal, strIngredient1, strMeasure1)
+            addIngredientToList(meal, strIngredient2, strMeasure2)
+            addIngredientToList(meal, strIngredient3, strMeasure3)
+            addIngredientToList(meal, strIngredient4, strMeasure4)
+            addIngredientToList(meal, strIngredient5, strMeasure5)
+            addIngredientToList(meal, strIngredient6, strMeasure6)
+            addIngredientToList(meal, strIngredient7, strMeasure7)
+            addIngredientToList(meal, strIngredient8, strMeasure8)
+            addIngredientToList(meal, strIngredient9, strMeasure9)
+            addIngredientToList(meal, strIngredient10, strMeasure10)
+            addIngredientToList(meal, strIngredient11, strMeasure11)
+            addIngredientToList(meal, strIngredient12, strMeasure12)
+            addIngredientToList(meal, strIngredient13, strMeasure13)
+            addIngredientToList(meal, strIngredient14, strMeasure14)
+            addIngredientToList(meal, strIngredient15, strMeasure15)
+            addIngredientToList(meal, strIngredient16, strMeasure16)
+            addIngredientToList(meal, strIngredient17, strMeasure17)
+            addIngredientToList(meal, strIngredient18, strMeasure18)
+            addIngredientToList(meal, strIngredient19, strMeasure19)
+            addIngredientToList(meal, strIngredient20, strMeasure20)
         }
-
         return meal
     }
 
-//    private fun addToList(item: String?, list: MutableList<Ingredient>) {
-//        if (checkNull(item)) {
-//            list.add(Ingredient(strIngredient20, strMeasure20))
-//        }
-//    }
+    private fun addIngredientToList(meal: Meal, ingredient: String?, measure: String?) {
+        if (checkIngredientNotNull(ingredient)) {
+            meal.ingredients.add(Ingredient(ingredient, measure))
+        }
+    }
 
-    private fun checkNull(ingredient: String?): Boolean {
+    private fun checkIngredientNotNull(ingredient: String?): Boolean {
         return !(ingredient == "" || ingredient == null)
     }
 }

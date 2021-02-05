@@ -10,7 +10,7 @@ class Meal(
     @Expose val strMeal: String,
     @Expose val strInstructions: String,
     @Expose val strMealThumb: String,
-    @Expose val strTags: String,
+    @Expose val strTags: String?,
     @Expose val strArea: String,
     var ingredients: MutableList<Ingredient>,
     @Expose val strIngredient1: String?,

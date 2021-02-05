@@ -73,6 +73,7 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
             setTitle(fullMeal.strMeal)
             setImage(fullMeal.strMealThumb)
             setInstructions(fullMeal.strInstructions)
+            setRegion(fullMeal.strArea)
         }
     }
 
