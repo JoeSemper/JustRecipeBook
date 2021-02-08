@@ -11,6 +11,7 @@ import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.ui.adapters.meals.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
+import com.joesemper.justrecipebook.util.constants.SearchType
 import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -21,8 +22,9 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     companion object {
         private const val MEAL_ARG = "MEAL"
 
-        fun newInstance(query: String) = HomeFragment().apply {
+        fun newInstance(searchType: SearchType, query: String) = HomeFragment().apply {
             arguments = Bundle().apply {
+                putParcelable(MEAL_ARG, searchType)
                 putString(MEAL_ARG, query)
             }
         }
@@ -30,7 +32,8 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
     val presenter: HomePresenter by moxyPresenter {
         val query = arguments?.getString(MEAL_ARG)
-        HomePresenter(query).apply {
+        val searchType = arguments?.getParcelable(MEAL_ARG) as SearchType?
+        HomePresenter(searchType, query).apply {
             App.instance.appComponent.inject(this)
         }
     }

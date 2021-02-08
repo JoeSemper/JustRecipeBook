@@ -20,6 +20,7 @@ import javax.inject.Singleton
         AppDataManagerModule::class,
         CiceroneModule::class,
         ImageLoaderModule::class,
+        LoggerModule::class,
 
     ]
 )

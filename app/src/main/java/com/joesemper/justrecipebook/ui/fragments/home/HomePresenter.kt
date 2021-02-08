@@ -1,19 +1,19 @@
 package com.joesemper.justrecipebook.ui.fragments.home
 
-import android.util.Log
-import com.joesemper.justrecipebook.BuildConfig.DEBUG
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Meal
 import com.joesemper.justrecipebook.ui.adapters.meals.IMealsListPresenter
 import com.joesemper.justrecipebook.ui.adapters.meals.MealItemView
 import com.joesemper.justrecipebook.ui.navigation.Screens
+import com.joesemper.justrecipebook.util.constants.SearchType
+import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Screen
 import javax.inject.Inject
 
-class HomePresenter(val query: String?): MvpPresenter<HomeView>() {
+class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresenter<HomeView>() {
 
     @Inject
     lateinit var mainThreadScheduler: Scheduler
@@ -23,6 +23,9 @@ class HomePresenter(val query: String?): MvpPresenter<HomeView>() {
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var logger: ILogger
 
     val mealsListPresenter = MealsListPresenter()
 
@@ -52,12 +55,10 @@ class HomePresenter(val query: String?): MvpPresenter<HomeView>() {
     }
 
     private fun loadData() {
-        if(query == "") {
-            searchMealByQuery(query)
-        }
-
-        if (query != null) {
-           searchMealByCategory(query)
+        when (searchType) {
+            SearchType.QUERY -> searchMealByQuery(query)
+            SearchType.CATEGORY -> searchMealByCategory()
+            else -> searchMealByQuery(query)
         }
     }
 
@@ -65,24 +66,25 @@ class HomePresenter(val query: String?): MvpPresenter<HomeView>() {
     private fun searchMealByQuery(query: String?) {
         dataManager.searchMealByName(query)
             .observeOn(mainThreadScheduler)
-            .subscribe({meals ->
+            .subscribe({ meals ->
                 updateMealsList(meals)
             }, {
-                log(it)
+                logger.log(it)
             })
     }
 
-    private fun searchMealByCategory(query: String) {
-        dataManager.getMealByCategory(query)
-            .observeOn(mainThreadScheduler)
-            .subscribe({meals ->
-                updateMealsList(meals)
-            }, {
-                log(it)
-            })
+    private fun searchMealByCategory() {
+        if (query != null)
+            dataManager.getMealByCategory(query)
+                .observeOn(mainThreadScheduler)
+                .subscribe({ meals ->
+                    updateMealsList(meals)
+                }, {
+                    logger.log(it)
+                })
     }
 
-    private fun setOnClickListeners(){
+    private fun setOnClickListeners() {
         mealsListPresenter.itemClickListener = { mealItemView ->
             val screen = getScreenByPosition(mealItemView.pos)
             router.navigateTo(screen)
@@ -98,13 +100,6 @@ class HomePresenter(val query: String?): MvpPresenter<HomeView>() {
         mealsListPresenter.meals.addAll(meals)
         viewState.updateList()
     }
-
-    private fun log(throwable: Throwable) {
-        if(DEBUG) {
-            Log.v("Meals", throwable.message.toString())
-        }
-    }
-
 
     fun backPressed(): Boolean {
         router.exit()
