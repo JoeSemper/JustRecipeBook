@@ -13,16 +13,17 @@ class MainPresenter : MvpPresenter<MainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        router.replaceScreen(Screens.HomeScreen())
+        router.replaceScreen(Screens.HomeScreen(""))
     }
 
     fun onHomeClicked(): Boolean {
-        router.navigateTo(Screens.HomeScreen())
+        router.navigateTo(Screens.HomeScreen(""))
         return true
     }
 
     fun onCategoriesClicked(): Boolean {
-        return false
+        router.navigateTo(Screens.CategoriesScreen())
+        return true
     }
 
     fun onFavoriteClicked(): Boolean {

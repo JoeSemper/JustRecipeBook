@@ -1,12 +1,11 @@
-package com.joesemper.justrecipebook.ui.fragments.home
+package com.joesemper.justrecipebook.ui.fragments.categories
 
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface HomeView: MvpView {
+interface CategoriesView: MvpView {
     fun init()
-    fun updateList()
-    fun showResult(text: String)
+    fun updateLis()
 }

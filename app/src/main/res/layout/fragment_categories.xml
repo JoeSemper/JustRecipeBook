@@ -24,26 +24,25 @@
             app:title="Just Recipe Book" />
 
         <SearchView
-            android:id="@+id/search_view"
+            android:id="@+id/search_categories_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#D9ECFB"
-            android:queryHint="Meal" />
+            android:queryHint="Category" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_meals"
+        android:id="@+id/rv_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:spanCount="3"
-        tools:itemCount="10"
-        tools:listitem="@layout/item_meal" />
+        tools:itemCount="20"
+        tools:listitem="@layout/item_category" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

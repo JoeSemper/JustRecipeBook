@@ -1,6 +1,5 @@
 package com.joesemper.justrecipebook.ui.fragments.home
 
-import android.app.DownloadManager
 import android.util.Log
 import com.joesemper.justrecipebook.BuildConfig.DEBUG
 import com.joesemper.justrecipebook.data.DataManager
@@ -14,7 +13,7 @@ import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Screen
 import javax.inject.Inject
 
-class HomePresenter: MvpPresenter<HomeView>() {
+class HomePresenter(val query: String?): MvpPresenter<HomeView>() {
 
     @Inject
     lateinit var mainThreadScheduler: Scheduler
@@ -49,18 +48,32 @@ class HomePresenter: MvpPresenter<HomeView>() {
     }
 
     fun onSearch(query: String?) {
+        searchMealByQuery(query)
+    }
+
+    private fun loadData() {
+        if(query == "") {
+            searchMealByQuery(query)
+        }
+
+        if (query != null) {
+           searchMealByCategory(query)
+        }
+    }
+
+
+    private fun searchMealByQuery(query: String?) {
         dataManager.searchMealByName(query)
             .observeOn(mainThreadScheduler)
-            .subscribe({ meals ->
+            .subscribe({meals ->
                 updateMealsList(meals)
-
             }, {
                 log(it)
             })
     }
 
-    private fun loadData() {
-        dataManager.getMealByCategory("Seafood")
+    private fun searchMealByCategory(query: String) {
+        dataManager.getMealByCategory(query)
             .observeOn(mainThreadScheduler)
             .subscribe({meals ->
                 updateMealsList(meals)

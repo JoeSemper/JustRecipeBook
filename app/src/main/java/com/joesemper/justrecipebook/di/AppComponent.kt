@@ -3,7 +3,9 @@ package com.joesemper.justrecipebook.di
 import com.joesemper.justrecipebook.di.modules.*
 import com.joesemper.justrecipebook.ui.activities.MainActivity
 import com.joesemper.justrecipebook.ui.activities.MainPresenter
+import com.joesemper.justrecipebook.ui.adapters.categories.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.adapters.meals.MealsRVAdapter
+import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesPresenter
 import com.joesemper.justrecipebook.ui.fragments.home.HomePresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.MealPresenter
@@ -29,5 +31,6 @@ interface AppComponent {
     fun inject(mealsRVAdapter: MealsRVAdapter)
     fun inject(mealPresenter: MealPresenter)
     fun inject(mealFragment: MealFragment)
-
+    fun inject(categoriesPresenter: CategoriesPresenter)
+    fun inject(categoriesRVAdapter: CategoriesRVAdapter)
 }

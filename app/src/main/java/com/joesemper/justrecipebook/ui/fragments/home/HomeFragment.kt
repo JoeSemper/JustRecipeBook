@@ -19,11 +19,18 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
 
     companion object {
-        fun newInstance() = HomeFragment()
+        private const val MEAL_ARG = "MEAL"
+
+        fun newInstance(query: String) = HomeFragment().apply {
+            arguments = Bundle().apply {
+                putString(MEAL_ARG, query)
+            }
+        }
     }
 
     val presenter: HomePresenter by moxyPresenter {
-        HomePresenter().apply {
+        val query = arguments?.getString(MEAL_ARG)
+        HomePresenter(query).apply {
             App.instance.appComponent.inject(this)
         }
     }
