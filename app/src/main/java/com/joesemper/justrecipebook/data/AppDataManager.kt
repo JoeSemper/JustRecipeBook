@@ -1,11 +1,12 @@
 package com.joesemper.justrecipebook.data
 
+import com.joesemper.justrecipebook.data.cache.IMealsCache
 import com.joesemper.justrecipebook.data.network.ApiManager
 import com.joesemper.justrecipebook.data.network.model.Category
 import com.joesemper.justrecipebook.data.network.model.Meal
 import io.reactivex.rxjava3.core.Single
 
-class AppDataManager(val apiManager: ApiManager): DataManager {
+class AppDataManager(val apiManager: ApiManager, cache: IMealsCache): DataManager {
 
     override fun getMealById(id: String): Single<Meal> =
         apiManager.getMealById(id)

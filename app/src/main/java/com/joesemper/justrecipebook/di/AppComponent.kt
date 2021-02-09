@@ -21,6 +21,7 @@ import javax.inject.Singleton
         CiceroneModule::class,
         ImageLoaderModule::class,
         LoggerModule::class,
+        DatabaseModule::class,
 
     ]
 )

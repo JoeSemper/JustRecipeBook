@@ -79,7 +79,7 @@ class ApiHolder(val api: IDataSource) : ApiManager {
 
     private fun addIngredientToList(meal: Meal, ingredient: String?, measure: String?) {
         if (checkIngredientNotNull(ingredient)) {
-            meal.ingredients.add(Ingredient(ingredient, measure))
+            meal.ingredients?.add(Ingredient(ingredient!!, measure))
         }
     }
 

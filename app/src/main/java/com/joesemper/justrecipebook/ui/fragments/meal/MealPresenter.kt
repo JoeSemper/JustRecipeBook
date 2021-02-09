@@ -33,7 +33,7 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
         override fun bindView(view: IngredientItemView) {
             val ingredient = ingredients[view.pos]
 
-            ingredient.ingredient?.let { view.setIngredient(it) }
+            ingredient.ingredient.let { view.setIngredient(it) }
             ingredient.measure?.let { view.setMeasure(it) }
         }
 
@@ -65,7 +65,7 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
 
     private fun initRV(fullMeal: Meal) {
         inngredientsListPresenter.ingredients.clear()
-        inngredientsListPresenter.ingredients.addAll(fullMeal.ingredients)
+        fullMeal.ingredients?.let { inngredientsListPresenter.ingredients.addAll(it) }
     }
 
     private fun initMealData(fullMeal: Meal){

@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Ingredient(
-    var ingredient: String?,
-    var measure: String?
+    var ingredient: String,
+    var measure: String? = ""
 ) : Parcelable
 
