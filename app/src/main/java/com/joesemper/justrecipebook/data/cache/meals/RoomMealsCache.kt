@@ -1,9 +1,7 @@
-package com.joesemper.justrecipebook.data.cache
+package com.joesemper.justrecipebook.data.cache.meals
 
 import com.joesemper.justrecipebook.data.cache.room.Database
-import com.joesemper.justrecipebook.data.cache.room.RoomIngredient
 import com.joesemper.justrecipebook.data.cache.room.RoomMeal
-import com.joesemper.justrecipebook.data.network.model.Ingredient
 import com.joesemper.justrecipebook.data.network.model.Meal
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single

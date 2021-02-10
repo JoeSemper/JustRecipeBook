@@ -1,4 +1,4 @@
-package com.joesemper.justrecipebook.data.cache
+package com.joesemper.justrecipebook.data.cache.ingredients
 
 import com.joesemper.justrecipebook.data.cache.room.Database
 import com.joesemper.justrecipebook.data.cache.room.RoomIngredient
@@ -17,7 +17,7 @@ class RoomIngredientsCache(val db: Database): IIngredientsCache {
         }
     }.subscribeOn(Schedulers.io())
 
-    override fun putMeals(meal: Meal, ingredients: List<Ingredient>) = Completable.fromAction {
+    override fun putIngredients(meal: Meal, ingredients: List<Ingredient>) = Completable.fromAction {
         val roomMeal = db.mealDao.findById(meal.idMeal)
         val roomIngredients = ingredients.map {
             RoomIngredient(it.ingredient, it.measure, roomMeal.idMeal)

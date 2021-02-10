@@ -2,6 +2,7 @@ package com.joesemper.justrecipebook.data
 
 import com.joesemper.justrecipebook.data.network.model.Category
 import com.joesemper.justrecipebook.data.network.model.Meal
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface DataManager {
@@ -11,4 +12,6 @@ interface DataManager {
     fun getAllCategories(): Single<List<Category>>
     fun getSingleRandomMeal(): Single<Meal>
     fun searchMealByName(query: String?): Single<List<Meal>>
+    fun putMelToCache(meal: Meal): Completable
+    fun getMealsFromCache(): Single<List<Meal>>
 }

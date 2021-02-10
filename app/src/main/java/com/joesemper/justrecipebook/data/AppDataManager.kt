@@ -1,12 +1,14 @@
 package com.joesemper.justrecipebook.data
 
-import com.joesemper.justrecipebook.data.cache.IMealsCache
+import com.joesemper.justrecipebook.data.cache.ICache
+import com.joesemper.justrecipebook.data.cache.meals.IMealsCache
 import com.joesemper.justrecipebook.data.network.ApiManager
 import com.joesemper.justrecipebook.data.network.model.Category
 import com.joesemper.justrecipebook.data.network.model.Meal
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-class AppDataManager(val apiManager: ApiManager, cache: IMealsCache): DataManager {
+class AppDataManager(val apiManager: ApiManager, val cache: ICache): DataManager {
 
     override fun getMealById(id: String): Single<Meal> =
         apiManager.getMealById(id)
@@ -22,4 +24,9 @@ class AppDataManager(val apiManager: ApiManager, cache: IMealsCache): DataManage
 
     override fun searchMealByName(query: String?): Single<List<Meal>> =
         apiManager.searchMealsByName(query)
+
+    override fun putMelToCache(meal: Meal) = cache.putMeal(meal)
+
+
+    override fun getMealsFromCache() = cache.getSavedMeals()
 }
