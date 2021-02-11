@@ -9,9 +9,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
-import com.joesemper.justrecipebook.ui.adapters.meals.MealsRVAdapter
+import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
-import com.joesemper.justrecipebook.util.constants.SearchType
+import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -21,10 +22,11 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
     companion object {
         private const val MEAL_ARG = "MEAL"
+        private const val SEARCH_ARG = "SEARCH"
 
-        fun newInstance(searchType: SearchType, query: String) = HomeFragment().apply {
+        fun newInstance(searchType: SearchType, query: String = "") = HomeFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(MEAL_ARG, searchType)
+                putParcelable(SEARCH_ARG, searchType)
                 putString(MEAL_ARG, query)
             }
         }
@@ -32,7 +34,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
     val presenter: HomePresenter by moxyPresenter {
         val query = arguments?.getString(MEAL_ARG)
-        val searchType = arguments?.getParcelable(MEAL_ARG) as SearchType?
+        val searchType = arguments?.getParcelable<SearchType>(SEARCH_ARG)
         HomePresenter(searchType, query).apply {
             App.instance.appComponent.inject(this)
         }
@@ -65,11 +67,6 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     private fun initSearch() {
         val listener: SearchView.OnQueryTextListener = QueryListener(presenter)
         search_view.setOnQueryTextListener(listener)
-
-
-        search_view.setOnSearchClickListener {
-            presenter.onSearch(search_view.query.toString())
-        }
     }
 
     override fun updateList() {

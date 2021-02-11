@@ -2,13 +2,13 @@ package com.joesemper.justrecipebook.di.modules
 
 import androidx.room.Room
 import com.joesemper.justrecipebook.App
-import com.joesemper.justrecipebook.data.cache.Cache
-import com.joesemper.justrecipebook.data.cache.ICache
-import com.joesemper.justrecipebook.data.cache.meals.IMealsCache
-import com.joesemper.justrecipebook.data.cache.ingredients.IIngredientsCache
-import com.joesemper.justrecipebook.data.cache.ingredients.RoomIngredientsCache
-import com.joesemper.justrecipebook.data.cache.meals.RoomMealsCache
-import com.joesemper.justrecipebook.data.cache.room.Database
+import com.joesemper.justrecipebook.data.db.DbManager
+import com.joesemper.justrecipebook.data.db.IDbManager
+import com.joesemper.justrecipebook.data.db.cache.meals.IMealsCache
+import com.joesemper.justrecipebook.data.db.cache.ingredients.IIngredientsCache
+import com.joesemper.justrecipebook.data.db.cache.ingredients.RoomIngredientsCache
+import com.joesemper.justrecipebook.data.db.cache.meals.RoomMealsCache
+import com.joesemper.justrecipebook.data.db.room.Database
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -33,8 +33,8 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun getCache(mealsCache: IMealsCache, ingredientsCache: IIngredientsCache): ICache {
-        return Cache(mealsCache, ingredientsCache)
+    fun getCache(mealsCache: IMealsCache, ingredientsCache: IIngredientsCache): IDbManager {
+        return DbManager(mealsCache, ingredientsCache)
     }
 
 }

@@ -12,6 +12,6 @@ interface DataManager {
     fun getAllCategories(): Single<List<Category>>
     fun getSingleRandomMeal(): Single<Meal>
     fun searchMealByName(query: String?): Single<List<Meal>>
-    fun putMelToCache(meal: Meal): Completable
-    fun getMealsFromCache(): Single<List<Meal>>
+    fun putMealToFavorite(meal: Meal): Completable
+    fun getFavoriteMeals(): Single<List<Meal>>
 }

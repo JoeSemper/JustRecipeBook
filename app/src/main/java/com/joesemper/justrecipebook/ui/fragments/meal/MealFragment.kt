@@ -1,20 +1,20 @@
 package com.joesemper.justrecipebook.ui.fragments.meal
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.data.network.model.Meal
-import com.joesemper.justrecipebook.ui.adapters.ingredients.IngredientsRVAdapter
+import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_meal.*
+import kotlinx.android.synthetic.main.fragment_meal.toolbar_recipe
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -26,7 +26,6 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
 
     companion object {
         private const val MEAL_ARG = "MEAL"
-
         fun newInstance(meal: Meal) = MealFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(MEAL_ARG, meal)
@@ -36,7 +35,6 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
 
     val presenter: MealPresenter by moxyPresenter {
         val meal = arguments?.getParcelable<Meal>(MEAL_ARG) as Meal
-
         MealPresenter(meal).apply {
             App.instance.appComponent.inject(this)
         }
@@ -48,8 +46,26 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) =
-        View.inflate(context, R.layout.fragment_meal, null)
+    ) :View? {
+        setHasOptionsMenu(true)
+        return View.inflate(context, R.layout.fragment_meal, null)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_recipe, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+                R.id.menu_add_to_favorite -> presenter.onAddToFavoriteClicked()
+
+                R.id.menu_add_to_menu -> {
+                    Toast.makeText(context, "Add to menu", Toast.LENGTH_SHORT).show()
+                    true
+                } else -> super.onOptionsItemSelected(item)
+            }
+    }
 
     override fun setTitle(title: String) {
         tv_meal_header.text = title
@@ -63,7 +79,6 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         tv_region.text = region
     }
 
-
     override fun setInstructions(instruction: String) {
         tv_meal_instruction.text = instruction
     }
@@ -71,6 +86,7 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
     override fun init() {
         executeInjection()
         initRV()
+        initActionBar()
     }
 
     private fun executeInjection() {
@@ -82,6 +98,20 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         rv_ingredients.setHasFixedSize(true)
         adapter = IngredientsRVAdapter(presenter.inngredientsListPresenter)
         rv_ingredients.adapter = adapter
+    }
+
+    private fun initActionBar() {
+        with(activity as AppCompatActivity) {
+            setSupportActionBar(toolbar_recipe)
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setDisplayShowHomeEnabled(true)
+
+            }
+        }
+        toolbar_recipe.setNavigationOnClickListener{
+            presenter.backPressed()
+        }
     }
 
     override fun updateList() {

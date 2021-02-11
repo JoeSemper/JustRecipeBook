@@ -1,12 +1,11 @@
 package com.joesemper.justrecipebook.ui.fragments.meal
 
-import android.util.Log
-import com.joesemper.justrecipebook.BuildConfig.DEBUG
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Ingredient
 import com.joesemper.justrecipebook.data.network.model.Meal
-import com.joesemper.justrecipebook.ui.adapters.ingredients.IIngredientsListPresenter
-import com.joesemper.justrecipebook.ui.adapters.ingredients.IngredientItemView
+import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IIngredientsListPresenter
+import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
+import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
@@ -23,7 +22,12 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
     @Inject
     lateinit var router: Router
 
+    @Inject
+    lateinit var logger: ILogger
+
     val inngredientsListPresenter = IngredientsListPresenter()
+
+    private lateinit var fullMeal: Meal
 
     class IngredientsListPresenter : IIngredientsListPresenter {
         val ingredients = mutableListOf<Ingredient>()
@@ -40,40 +44,52 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
         override fun getCount(): Int = ingredients.size
     }
 
-
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         loadFullMeal()
     }
 
+    fun onAddToFavoriteClicked(): Boolean {
+        var result = false
+        dataManager.putMealToFavorite(fullMeal)
+            .observeOn(mainThreadScheduler)
+            .subscribe({
+                result = true
+            }, {
+                logger.log(it)
+            })
+        return result
+    }
+
     private fun loadFullMeal() {
         dataManager.getMealById(meal.idMeal)
-            .observeOn(mainThreadScheduler).subscribe({ meal ->
+            .observeOn(mainThreadScheduler)
+            .subscribe({ meal ->
                 displayMeal(meal)
             }, {
-                if (DEBUG) {
-                    Log.v("Meal", it.message.toString())
-                }
+                logger.log(it)
             })
     }
 
-    private fun displayMeal(fullMeal: Meal) {
-        initRV(fullMeal)
-        initMealData(fullMeal)
+    private fun displayMeal(meal: Meal) {
+        updateRV(meal)
+        displayMealData(meal)
+        fullMeal = meal
     }
 
-    private fun initRV(fullMeal: Meal) {
+    private fun updateRV(meal: Meal) {
         inngredientsListPresenter.ingredients.clear()
-        fullMeal.ingredients?.let { inngredientsListPresenter.ingredients.addAll(it) }
+        meal.ingredients?.let { inngredientsListPresenter.ingredients.addAll(it) }
+        viewState.updateList()
     }
 
-    private fun initMealData(fullMeal: Meal){
+    private fun displayMealData(meal: Meal) {
         with(viewState) {
-            setTitle(fullMeal.strMeal)
-            setImage(fullMeal.strMealThumb)
-            setInstructions(fullMeal.strInstructions)
-            setRegion(fullMeal.strArea)
+            setTitle(meal.strMeal)
+            setImage(meal.strMealThumb)
+            setInstructions(meal.strInstructions)
+            setRegion(meal.strArea)
         }
     }
 

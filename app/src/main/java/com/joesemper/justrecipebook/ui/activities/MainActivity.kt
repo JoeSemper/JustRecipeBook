@@ -18,7 +18,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
 
-    val navigator = SupportAppNavigator(this, supportFragmentManager, R.id.container)
+    private val navigator = SupportAppNavigator(this, supportFragmentManager, R.id.container)
 
     private val presenter by moxyPresenter {
         MainPresenter().apply {
@@ -29,8 +29,16 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        App.instance.appComponent.inject(this)
 
+        initInjection()
+        initBottomNav()
+    }
+
+    private fun initInjection() {
+        App.instance.appComponent.inject(this)
+    }
+
+    private fun initBottomNav() {
         bottom_nav.setOnNavigationItemSelectedListener { menuItem ->
             if (menuItem.isChecked) {
                 return@setOnNavigationItemSelectedListener false

@@ -3,8 +3,8 @@ package com.joesemper.justrecipebook.di.modules
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.joesemper.justrecipebook.data.network.ApiHolder
 import com.joesemper.justrecipebook.data.network.ApiManager
+import com.joesemper.justrecipebook.data.network.IApiManager
 import com.joesemper.justrecipebook.data.network.api.IDataSource
 import dagger.Module
 import dagger.Provides
@@ -47,5 +47,5 @@ class ApiModule {
         .create(IDataSource::class.java)
 
     @Provides
-    fun getApiManager(api: IDataSource): ApiManager = ApiHolder(api)
+    fun getApiManager(api: IDataSource): IApiManager = ApiManager(api)
 }

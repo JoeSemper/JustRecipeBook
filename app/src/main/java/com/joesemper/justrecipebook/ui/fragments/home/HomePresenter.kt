@@ -2,10 +2,10 @@ package com.joesemper.justrecipebook.ui.fragments.home
 
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Meal
-import com.joesemper.justrecipebook.ui.adapters.meals.IMealsListPresenter
-import com.joesemper.justrecipebook.ui.adapters.meals.MealItemView
+import com.joesemper.justrecipebook.ui.fragments.home.adapter.IMealsListPresenter
+import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealItemView
 import com.joesemper.justrecipebook.ui.navigation.Screens
-import com.joesemper.justrecipebook.util.constants.SearchType
+import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -58,6 +58,7 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
         when (searchType) {
             SearchType.QUERY -> searchMealByQuery(query)
             SearchType.CATEGORY -> searchMealByCategory()
+            SearchType.FAVORITE -> getFavoriteMeals()
             else -> searchMealByQuery(query)
         }
     }
@@ -82,6 +83,16 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
                 }, {
                     logger.log(it)
                 })
+    }
+
+    private fun getFavoriteMeals() {
+        dataManager.getFavoriteMeals()
+            .observeOn(mainThreadScheduler)
+            .subscribe({ meals->
+                updateMealsList(meals)
+            }, {
+                logger.log(it)
+            })
     }
 
     private fun setOnClickListeners() {

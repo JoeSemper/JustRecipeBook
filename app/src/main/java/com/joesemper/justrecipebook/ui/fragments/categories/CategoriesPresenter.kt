@@ -2,10 +2,10 @@ package com.joesemper.justrecipebook.ui.fragments.categories
 
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Category
-import com.joesemper.justrecipebook.ui.adapters.categories.CategoryItemView
-import com.joesemper.justrecipebook.ui.adapters.categories.ICategoryListPresenter
+import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoryItemView
+import com.joesemper.justrecipebook.ui.fragments.categories.adapter.ICategoryListPresenter
 import com.joesemper.justrecipebook.ui.navigation.Screens
-import com.joesemper.justrecipebook.util.constants.SearchType
+import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
