@@ -1,10 +1,15 @@
 package com.joesemper.justrecipebook.ui.fragments.meal
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
@@ -83,6 +88,16 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         tv_meal_instruction.text = instruction
     }
 
+    override fun setIsFavorite(isFavorite: Boolean) {
+        if (isFavorite) {
+            toolbar_recipe.menu[1].icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_24)
+        } else {
+            toolbar_recipe.menu[1].icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_border_24)
+        }
+    }
+
     override fun init() {
         executeInjection()
         initRV()
@@ -112,6 +127,10 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         toolbar_recipe.setNavigationOnClickListener{
             presenter.backPressed()
         }
+    }
+
+    override fun showResult(text: String) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun updateList() {

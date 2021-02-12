@@ -21,6 +21,14 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
     }.subscribeOn(Schedulers.io())
 
 
+    override fun isMealFavorite(meal: Meal) =
+        mealsCache.getMealById(meal.idMeal).flatMap { roomMeal ->
+            Single.fromCallable {
+                roomMeal != null
+            }
+        }.subscribeOn(Schedulers.io())
+
+
     private fun mapIngredientsToMeal(meals: List<Meal>) = Single.fromCallable {
         meals.map { meal ->
             getMealIngredients(meal).subscribe({ ingredients ->

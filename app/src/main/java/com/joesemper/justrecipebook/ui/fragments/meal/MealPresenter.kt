@@ -56,10 +56,17 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
             .observeOn(mainThreadScheduler)
             .subscribe({
                 result = true
+                viewState.showResult("Added to favorite")
+
             }, {
                 logger.log(it)
             })
         return result
+    }
+
+    fun addToMenuClicked(): Boolean {
+        viewState.showResult("Add to menu clicked")
+        return true
     }
 
     private fun loadFullMeal() {
@@ -73,9 +80,9 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
     }
 
     private fun displayMeal(meal: Meal) {
+        fullMeal = meal
         updateRV(meal)
         displayMealData(meal)
-        fullMeal = meal
     }
 
     private fun updateRV(meal: Meal) {
@@ -90,8 +97,10 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
             setImage(meal.strMealThumb)
             setInstructions(meal.strInstructions)
             setRegion(meal.strArea)
+            setIsFavorite(meal.isFavorite)
         }
     }
+
 
 
     fun backPressed(): Boolean {

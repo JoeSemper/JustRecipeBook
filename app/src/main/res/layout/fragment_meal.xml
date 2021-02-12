@@ -18,6 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:textAlignment="center"
             app:layout_collapseMode="pin"
+            style="@style/ActionBatTheme"
             app:title="Recipe" />
     </com.google.android.material.appbar.AppBarLayout>
 

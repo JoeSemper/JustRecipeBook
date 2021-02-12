@@ -17,7 +17,7 @@ class RoomMealsCache(val db: Database) : IMealsCache {
                 strArea = roomMeal.strArea,
                 strTags = roomMeal.strTags,
                 strMealThumb = roomMeal.strMealThumb,
-                strInstructions = roomMeal.strInstructions
+                strInstructions = roomMeal.strInstructions,
             )
         }
     }
@@ -36,6 +36,9 @@ class RoomMealsCache(val db: Database) : IMealsCache {
         db.mealDao.insert(roomMeal)
     }.subscribeOn(Schedulers.io())
 
+    override fun getMealById(id: String) = Single.fromCallable {
+        db.mealDao.findById(id)
+    }
 
     override fun putMeal(meal: Meal)  {
         val roomMeal = RoomMeal(

@@ -53,4 +53,6 @@ class Meal(
     @Expose val strMeasure18: String? = "",
     @Expose val strMeasure19: String? = "",
     @Expose val strMeasure20: String? = "",
+    var isFavorite: Boolean = false,
+
     ) : Parcelable

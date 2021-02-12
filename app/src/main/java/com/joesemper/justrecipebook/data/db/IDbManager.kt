@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface IDbManager {
-    fun getSavedMeals() : Single<List<Meal>>
+    fun getSavedMeals(): Single<List<Meal>>
     fun putMeal(meal: Meal): Completable
+    fun isMealFavorite(meal:Meal): Single<Boolean>
 }

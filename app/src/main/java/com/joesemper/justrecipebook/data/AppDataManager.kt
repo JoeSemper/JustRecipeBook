@@ -6,10 +6,15 @@ import com.joesemper.justrecipebook.data.network.model.Category
 import com.joesemper.justrecipebook.data.network.model.Meal
 import io.reactivex.rxjava3.core.Single
 
-class AppDataManager(val apiManager: IApiManager, val cache: IDbManager): DataManager {
+class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataManager {
 
     override fun getMealById(id: String): Single<Meal> =
-        apiManager.getMealById(id)
+        apiManager.getMealById(id).flatMap { meal ->
+            Single.fromCallable {
+                isMealFavorite(meal)
+            }
+        }
+
 
     override fun getMealByCategory(category: String): Single<List<Meal>> =
         apiManager.getMealsByCategory(category)
@@ -25,8 +30,16 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager): DataMa
 
     override fun putMealToFavorite(meal: Meal) = cache.putMeal(meal)
 
-    override fun getFavoriteMeals(): Single<List<Meal>> {
-        val meals = cache.getSavedMeals()
-        return meals
+    override fun getFavoriteMeals(): Single<List<Meal>> = cache.getSavedMeals()
+
+
+    private fun isMealFavorite(meal: Meal): Meal {
+        cache.isMealFavorite(meal).subscribe({
+            meal.isFavorite = it
+        }, {
+
+        }
+        )
+        return meal
     }
 }
