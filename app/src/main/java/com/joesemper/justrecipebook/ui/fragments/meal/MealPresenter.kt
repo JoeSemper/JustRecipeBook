@@ -11,7 +11,7 @@ import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
+class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     @Inject
     lateinit var mainThreadScheduler: Scheduler
@@ -26,8 +26,6 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
     lateinit var logger: ILogger
 
     val inngredientsListPresenter = IngredientsListPresenter()
-
-    private lateinit var fullMeal: Meal
 
     class IngredientsListPresenter : IIngredientsListPresenter {
         val ingredients = mutableListOf<Ingredient>()
@@ -51,17 +49,12 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
     }
 
     fun onAddToFavoriteClicked(): Boolean {
-        var result = false
-        dataManager.putMealToFavorite(fullMeal)
-            .observeOn(mainThreadScheduler)
-            .subscribe({
-                result = true
-                viewState.showResult("Added to favorite")
-
-            }, {
-                logger.log(it)
-            })
-        return result
+        if (currentMeal.isFavorite) {
+            removeMealFromFavorite()
+        } else {
+            addMealToFavorite()
+        }
+        return true
     }
 
     fun addToMenuClicked(): Boolean {
@@ -70,9 +63,10 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
     }
 
     private fun loadFullMeal() {
-        dataManager.getMealById(meal.idMeal)
+        dataManager.getMealById(currentMeal.idMeal)
             .observeOn(mainThreadScheduler)
             .subscribe({ meal ->
+                currentMeal = meal
                 displayMeal(meal)
             }, {
                 logger.log(it)
@@ -80,7 +74,6 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
     }
 
     private fun displayMeal(meal: Meal) {
-        fullMeal = meal
         updateRV(meal)
         displayMealData(meal)
     }
@@ -101,7 +94,29 @@ class MealPresenter(val meal: Meal) : MvpPresenter<MealView>() {
         }
     }
 
+    private fun addMealToFavorite() {
+        dataManager.putMealToFavorite(currentMeal)
+            .observeOn(mainThreadScheduler)
+            .subscribe({
+                viewState.showResult("Added to favorite")
+                viewState.setIsFavorite(true)
+                currentMeal.isFavorite = true
+            }, {
+                logger.log(it)
+            })
+    }
 
+    private fun removeMealFromFavorite() {
+        dataManager.deleteMealFromFavorite(currentMeal)
+            .observeOn(mainThreadScheduler)
+            .subscribe({
+                viewState.showResult("Removed from favorite")
+                viewState.setIsFavorite(false)
+                currentMeal.isFavorite = false
+            }, {
+                logger.log(it)
+            })
+    }
 
     fun backPressed(): Boolean {
         router.exit()

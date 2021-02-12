@@ -14,4 +14,5 @@ interface DataManager {
     fun searchMealByName(query: String?): Single<List<Meal>>
     fun putMealToFavorite(meal: Meal): Completable
     fun getFavoriteMeals(): Single<List<Meal>>
+    fun deleteMealFromFavorite(meal: Meal): Completable
 }

@@ -20,7 +20,7 @@ class RoomMealsCache(val db: Database) : IMealsCache {
                 strInstructions = roomMeal.strInstructions,
             )
         }
-    }
+    }.subscribeOn(Schedulers.io())
 
     override fun putMeals(meals: List<Meal>) = Completable.fromAction {
         val roomMeal = meals.map { meal ->
@@ -38,9 +38,9 @@ class RoomMealsCache(val db: Database) : IMealsCache {
 
     override fun getMealById(id: String) = Single.fromCallable {
         db.mealDao.findById(id)
-    }
+    }.subscribeOn(Schedulers.io())
 
-    override fun putMeal(meal: Meal)  {
+    override fun putMeal(meal: Meal) = Completable.fromAction {
         val roomMeal = RoomMeal(
             idMeal = meal.idMeal,
             strMeal = meal.strMeal,
@@ -50,5 +50,11 @@ class RoomMealsCache(val db: Database) : IMealsCache {
             strInstructions = meal.strInstructions
         )
         db.mealDao.insert(roomMeal)
-    }
+    }.subscribeOn(Schedulers.io())
+
+    override fun deleteMeal(meal: Meal) = Completable.fromAction {
+        db.mealDao.deleteById(meal.idMeal)
+    }.subscribeOn(Schedulers.io())
+
+
 }

@@ -7,7 +7,8 @@ import io.reactivex.rxjava3.core.Single
 
 interface IMealsCache {
     fun getMeals(): Single<List<Meal>>
-    fun putMeals(meals: List<Meal>) : Completable
-    fun putMeal(meal: Meal)
+    fun putMeals(meals: List<Meal>): Completable
+    fun putMeal(meal: Meal): Completable
+    fun deleteMeal(meal: Meal): Completable
     fun getMealById(id: String): Single<RoomMeal?>
 }

@@ -8,4 +8,5 @@ interface IDbManager {
     fun getSavedMeals(): Single<List<Meal>>
     fun putMeal(meal: Meal): Completable
     fun isMealFavorite(meal:Meal): Single<Boolean>
+    fun deleteMealFromFavorite(meal: Meal): Completable
 }

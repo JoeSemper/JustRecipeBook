@@ -7,5 +7,6 @@ import io.reactivex.rxjava3.core.Single
 
 interface IIngredientsCache {
     fun getIngredients(meal: Meal): Single<List<Ingredient>>
-    fun putIngredients(meal: Meal, ingredients: List<Ingredient>)
+    fun putIngredients(meal: Meal, ingredients: List<Ingredient>): Completable
+    fun deleteIngredients(meal: Meal): Completable
 }

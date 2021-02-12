@@ -29,4 +29,7 @@ interface IngredientDao {
 
     @Query("SELECT * FROM RoomIngredient WHERE mealId = :id")
     fun findForMeal(id : String) : List<RoomIngredient>
+
+    @Query("DELETE FROM RoomIngredient WHERE mealId = :id")
+    fun deleteForMeal(id : String)
 }

@@ -20,6 +20,10 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
         put(meal)
     }.subscribeOn(Schedulers.io())
 
+    override fun deleteMealFromFavorite(meal: Meal)= Completable.fromAction {
+        delete(meal)
+    }.subscribeOn(Schedulers.io())
+
 
     override fun isMealFavorite(meal: Meal) =
         mealsCache.getMealById(meal.idMeal).flatMap { roomMeal ->
@@ -38,13 +42,18 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
             })
             meal
         }
-    }
+    }.subscribeOn(Schedulers.io())
 
     private fun getMealIngredients(meal: Meal) = ingredientsCache.getIngredients(meal)
 
     private fun put(meal: Meal) {
-        mealsCache.putMeal(meal)
-        ingredientsCache.putIngredients(meal, meal.ingredients!!.toList())
+        mealsCache.putMeal(meal).subscribe()
+        ingredientsCache.putIngredients(meal, meal.ingredients!!.toList()).subscribe()
+    }
+
+    private fun delete(meal: Meal) {
+        mealsCache.deleteMeal(meal).subscribe()
+        ingredientsCache.deleteIngredients(meal).subscribe()
     }
 
 }

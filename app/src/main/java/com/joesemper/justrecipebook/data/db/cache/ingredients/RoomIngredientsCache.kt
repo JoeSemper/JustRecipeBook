@@ -17,11 +17,15 @@ class RoomIngredientsCache(val db: Database): IIngredientsCache {
         }
     }.subscribeOn(Schedulers.io())
 
-    override fun putIngredients(meal: Meal, ingredients: List<Ingredient>)  {
+    override fun putIngredients(meal: Meal, ingredients: List<Ingredient>) = Completable.fromAction {
         val roomMeal = db.mealDao.findById(meal.idMeal)
         val roomIngredients = ingredients.map {
             RoomIngredient(it.ingredient, it.measure, roomMeal.idMeal)
         }
         db.ingredientDao.insert(roomIngredients)
+    }
+
+    override fun deleteIngredients(meal: Meal)= Completable.fromAction {
+        db.ingredientDao.deleteForMeal(meal.idMeal)
     }
 }
