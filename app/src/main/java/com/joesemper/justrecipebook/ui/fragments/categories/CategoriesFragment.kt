@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_categories.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 class CategoriesFragment : MvpAppCompatFragment(), CategoriesView, BackButtonListener {
 

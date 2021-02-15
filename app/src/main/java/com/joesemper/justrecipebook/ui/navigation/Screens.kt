@@ -20,5 +20,4 @@ class Screens {
         override fun getFragment() = CategoriesFragment.newInstance()
     }
 
-
 }

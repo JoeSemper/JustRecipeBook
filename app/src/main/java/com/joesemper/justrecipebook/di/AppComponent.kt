@@ -1,5 +1,6 @@
 package com.joesemper.justrecipebook.di
 
+import com.joesemper.justrecipebook.data.db.IDbManager
 import com.joesemper.justrecipebook.di.modules.*
 import com.joesemper.justrecipebook.ui.activities.MainActivity
 import com.joesemper.justrecipebook.ui.activities.MainPresenter
@@ -35,4 +36,5 @@ interface AppComponent {
     fun inject(mealFragment: MealFragment)
     fun inject(categoriesPresenter: CategoriesPresenter)
     fun inject(categoriesRVAdapter: CategoriesRVAdapter)
+    fun inject(dbManager: IDbManager)
 }

@@ -9,6 +9,7 @@ import com.joesemper.justrecipebook.data.db.cache.ingredients.IIngredientsCache
 import com.joesemper.justrecipebook.data.db.cache.ingredients.RoomIngredientsCache
 import com.joesemper.justrecipebook.data.db.cache.meals.RoomMealsCache
 import com.joesemper.justrecipebook.data.db.room.Database
+import com.joesemper.justrecipebook.util.logger.ILogger
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -33,8 +34,8 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun getCache(mealsCache: IMealsCache, ingredientsCache: IIngredientsCache): IDbManager {
-        return DbManager(mealsCache, ingredientsCache)
+    fun getCache(mealsCache: IMealsCache, ingredientsCache: IIngredientsCache, logger: ILogger): IDbManager {
+        return DbManager(mealsCache, ingredientsCache, logger)
     }
 
 }

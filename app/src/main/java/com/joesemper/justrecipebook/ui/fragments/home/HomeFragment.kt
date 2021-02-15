@@ -46,8 +46,10 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) =
-        View.inflate(context, R.layout.fragment_home, null)
+    ): View? {
+        return View.inflate(context, R.layout.fragment_home, null)
+    }
+
 
 
     override fun init() {

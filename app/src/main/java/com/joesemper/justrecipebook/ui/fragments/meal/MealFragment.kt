@@ -1,14 +1,11 @@
 package com.joesemper.justrecipebook.ui.fragments.meal
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
@@ -17,9 +14,7 @@ import com.joesemper.justrecipebook.data.network.model.Meal
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_meal.*
-import kotlinx.android.synthetic.main.fragment_meal.toolbar_recipe
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -64,12 +59,15 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
                 R.id.menu_add_to_favorite -> presenter.onAddToFavoriteClicked()
-
-                R.id.menu_add_to_menu -> {
-                    Toast.makeText(context, "Add to menu", Toast.LENGTH_SHORT).show()
-                    true
-                } else -> super.onOptionsItemSelected(item)
+                R.id.menu_add_to_menu -> presenter.addToMenuClicked()
+                else -> super.onOptionsItemSelected(item)
             }
+    }
+
+    override fun init() {
+        executeInjection()
+        initRV()
+        initActionBar()
     }
 
     override fun setTitle(title: String) {
@@ -98,11 +96,6 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         }
     }
 
-    override fun init() {
-        executeInjection()
-        initRV()
-        initActionBar()
-    }
 
     private fun executeInjection() {
         App.instance.appComponent.inject(this)
@@ -121,7 +114,6 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setDisplayShowHomeEnabled(true)
-
             }
         }
         toolbar_recipe.setNavigationOnClickListener{
