@@ -86,11 +86,12 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     private fun displayMealData(meal: Meal) {
         with(viewState) {
-            setTitle(meal.strMeal)
             setImage(meal.strMealThumb)
+            setTitle(meal.strMeal)
             setInstructions(meal.strInstructions)
             setRegion(meal.strArea)
             setIsFavorite(meal.isFavorite)
+            showContent()
         }
     }
 

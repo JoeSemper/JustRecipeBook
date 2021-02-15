@@ -63,7 +63,6 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
         }
     }
 
-
     private fun searchMealByQuery(query: String?) {
         dataManager.searchMealByName(query)
             .observeOn(mainThreadScheduler)

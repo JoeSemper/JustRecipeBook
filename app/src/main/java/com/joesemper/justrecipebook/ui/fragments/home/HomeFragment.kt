@@ -51,7 +51,6 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     }
 
 
-
     override fun init() {
         initRV()
         initSearch()

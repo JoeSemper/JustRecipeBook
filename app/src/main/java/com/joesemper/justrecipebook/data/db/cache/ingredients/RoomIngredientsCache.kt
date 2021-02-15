@@ -15,7 +15,7 @@ class RoomIngredientsCache(val db: Database): IIngredientsCache {
         return@fromCallable db.ingredientDao.findForMeal(roomMeal.idMeal).map {
             Ingredient(it.ingredient, it.measure)
         }
-    }.subscribeOn(Schedulers.io())
+    }
 
     override fun putIngredients(meal: Meal, ingredients: List<Ingredient>) = Completable.fromAction {
         val roomMeal = db.mealDao.findById(meal.idMeal)

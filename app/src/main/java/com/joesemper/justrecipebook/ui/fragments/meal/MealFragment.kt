@@ -96,6 +96,10 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         }
     }
 
+    override fun showContent() {
+        meal_content.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+    }
 
     private fun executeInjection() {
         App.instance.appComponent.inject(this)
