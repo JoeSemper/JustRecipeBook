@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
@@ -88,10 +89,10 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
 
     override fun setIsFavorite(isFavorite: Boolean) {
         if (isFavorite) {
-            toolbar_recipe.menu[1].icon =
+            toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_24)
         } else {
-            toolbar_recipe.menu[1].icon =
+            toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_border_24)
         }
     }
@@ -108,6 +109,7 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
     private fun initRV(){
         rv_ingredients.layoutManager = LinearLayoutManager(context)
         rv_ingredients.setHasFixedSize(true)
+        rv_ingredients.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
         adapter = IngredientsRVAdapter(presenter.inngredientsListPresenter)
         rv_ingredients.adapter = adapter
     }

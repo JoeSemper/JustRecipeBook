@@ -3,9 +3,12 @@ package com.joesemper.justrecipebook.di.modules
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.data.network.ApiManager
 import com.joesemper.justrecipebook.data.network.IApiManager
 import com.joesemper.justrecipebook.data.network.api.IDataSource
+import com.joesemper.justrecipebook.util.network.AndroidNetworkStatus
+import com.joesemper.justrecipebook.util.network.INetworkStatus
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -48,4 +51,8 @@ class ApiModule {
 
     @Provides
     fun getApiManager(api: IDataSource): IApiManager = ApiManager(api)
+
+    @Singleton
+    @Provides
+    fun networkStatus(app: App): INetworkStatus = AndroidNetworkStatus(app)
 }
