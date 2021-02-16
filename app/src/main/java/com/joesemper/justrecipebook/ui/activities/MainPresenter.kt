@@ -17,17 +17,17 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun onHomeClicked(): Boolean {
-        router.navigateTo(Screens.HomeScreen(SearchType.QUERY))
+        router.newRootScreen(Screens.HomeScreen(SearchType.QUERY))
         return true
     }
 
     fun onCategoriesClicked(): Boolean {
-        router.navigateTo(Screens.CategoriesScreen())
+        router.newRootScreen(Screens.CategoriesScreen())
         return true
     }
 
     fun onFavoriteClicked(): Boolean {
-        router.navigateTo(Screens.HomeScreen(SearchType.FAVORITE))
+        router.newRootScreen(Screens.HomeScreen(SearchType.FAVORITE))
         return true
     }
 

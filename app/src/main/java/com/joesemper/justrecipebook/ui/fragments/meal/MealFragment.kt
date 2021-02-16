@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
@@ -41,7 +40,7 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         }
     }
 
-    private var adapter: IngredientsRVAdapter? = null
+    private var ingredientsAdapter: IngredientsRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,11 +106,13 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
     }
 
     private fun initRV(){
-        rv_ingredients.layoutManager = LinearLayoutManager(context)
-        rv_ingredients.setHasFixedSize(true)
-        rv_ingredients.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
-        adapter = IngredientsRVAdapter(presenter.inngredientsListPresenter)
-        rv_ingredients.adapter = adapter
+        ingredientsAdapter = IngredientsRVAdapter(presenter.inngredientsListPresenter)
+        with(rv_ingredients) {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
+            adapter = ingredientsAdapter
+        }
     }
 
     private fun initActionBar() {
@@ -123,7 +124,7 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
             }
         }
         toolbar_recipe.setNavigationOnClickListener{
-            presenter.backPressed()
+            backPressed()
         }
     }
 
@@ -132,7 +133,7 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
     }
 
     override fun updateList() {
-        adapter?.notifyDataSetChanged()
+        ingredientsAdapter?.notifyDataSetChanged()
     }
 
     override fun backPressed(): Boolean {

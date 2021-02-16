@@ -20,13 +20,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     private val navigator = SupportAppNavigator(this, supportFragmentManager, R.id.container)
 
-
     private val presenter by moxyPresenter {
         MainPresenter().apply {
             App.instance.appComponent.inject(this)
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +40,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     private fun initBottomNav() {
         bottom_nav.setOnNavigationItemSelectedListener { menuItem ->
-//            if (menuItem.isChecked) {
-//                return@setOnNavigationItemSelectedListener false
-//            }
-
             menuItem.isChecked = true
 
             when (menuItem.itemId) {
@@ -73,8 +67,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 return
             }
         }
-
         presenter.backClicked()
     }
-
 }
