@@ -1,7 +1,8 @@
-package com.joesemper.justrecipebook.ui.fragments.categories
+package com.joesemper.justrecipebook.presenter
 
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Category
+import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesView
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoryItemView
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.ICategoryListPresenter
 import com.joesemper.justrecipebook.ui.navigation.Screens

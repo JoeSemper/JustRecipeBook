@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_recipe"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.DayNight"
@@ -27,7 +27,9 @@
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:background="#D9ECFB"
+            android:gravity="end"
             android:queryHint="Meal" />
     </com.google.android.material.appbar.AppBarLayout>
 

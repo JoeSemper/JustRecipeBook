@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
+import com.joesemper.justrecipebook.presenter.CategoriesPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_categories.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 class CategoriesFragment : MvpAppCompatFragment(), CategoriesView, BackButtonListener {
 

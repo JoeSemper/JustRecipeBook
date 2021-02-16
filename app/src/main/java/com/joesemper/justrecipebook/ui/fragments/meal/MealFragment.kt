@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.presenter.MealPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader

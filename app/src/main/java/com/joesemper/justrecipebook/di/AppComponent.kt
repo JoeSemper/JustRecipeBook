@@ -6,10 +6,10 @@ import com.joesemper.justrecipebook.ui.activities.MainActivity
 import com.joesemper.justrecipebook.ui.activities.MainPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
-import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesPresenter
-import com.joesemper.justrecipebook.ui.fragments.home.HomePresenter
+import com.joesemper.justrecipebook.presenter.CategoriesPresenter
+import com.joesemper.justrecipebook.presenter.HomePresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
-import com.joesemper.justrecipebook.ui.fragments.meal.MealPresenter
+import com.joesemper.justrecipebook.presenter.MealPresenter
 import dagger.Component
 import javax.inject.Singleton
 

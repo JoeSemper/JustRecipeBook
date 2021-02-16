@@ -7,6 +7,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+
     defaultConfig {
         applicationId "com.joesemper.justrecipebook"
         minSdkVersion 21
@@ -23,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -76,4 +78,9 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.6'
     kapt 'androidx.room:room-compiler:2.2.6'
     implementation 'androidx.room:room-ktx:2.2.6'
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation "androidx.appcompat:appcompat-resources:1.2.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
 }

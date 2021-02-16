@@ -1,7 +1,8 @@
-package com.joesemper.justrecipebook.ui.fragments.home
+package com.joesemper.justrecipebook.presenter
 
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.ui.fragments.home.HomeView
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.IMealsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealItemView
 import com.joesemper.justrecipebook.ui.navigation.Screens
