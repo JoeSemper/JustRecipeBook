@@ -2,9 +2,9 @@ package com.joesemper.justrecipebook.ui.fragments.home
 
 import android.os.Bundle
 import android.view.*
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
@@ -46,12 +46,20 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return View.inflate(context, R.layout.fragment_home, null)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_home, menu)
+        val item = menu.findItem(R.id.action_search)
+        val searchView = item.actionView as SearchView
+        initSearch(searchView)
     }
 
     override fun init() {
         initRV()
-        initSearch()
         initActionBar()
     }
 
@@ -64,9 +72,9 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         rv_meals.adapter = adapter
     }
 
-    private fun initSearch() {
-        val listener: SearchView.OnQueryTextListener = QueryListener(presenter)
-        search_view.setOnQueryTextListener(listener)
+    private fun initSearch(searchView: SearchView) {
+        val listener = QueryListener(presenter, searchView)
+        searchView.setOnQueryTextListener(listener)
     }
 
     private fun initActionBar() {
@@ -85,9 +93,10 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
     override fun backPressed(): Boolean = presenter.backPressed()
 
-    private class QueryListener(val presenter: HomePresenter) : SearchView.OnQueryTextListener {
+    private class QueryListener(val presenter: HomePresenter, val searchView: SearchView) : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
             presenter.onSearch(query)
+            searchView.clearFocus()
             return true
         }
 

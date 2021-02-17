@@ -22,15 +22,6 @@
             android:theme="@style/ThemeOverlay.AppCompat.DayNight"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="Just Recipe Book" />
-
-        <SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="#D9ECFB"
-            android:gravity="end"
-            android:queryHint="Meal" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
