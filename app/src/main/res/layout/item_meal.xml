@@ -42,6 +42,7 @@
         android:maxLines="2"
         android:text="Meal"
         android:textAlignment="center"
+        android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

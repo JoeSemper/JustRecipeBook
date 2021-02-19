@@ -54,13 +54,13 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-
         return View.inflate(context, R.layout.fragment_meal, null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_recipe, menu)
+        presenter.onOptionsMenuCreated()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,13 +74,57 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
     override fun init() {
         executeInjection()
         initRV()
-        initActionBar()
+    }
 
-        button_play_video.setOnClickListener {
-            presenter.onWatchVideoClicked()
+    override fun setImage(url: String) {
+        imageLoader.loadInto(url, iv_meal_image2)
+    }
+
+    override fun setInstructions(instruction: String) {
+        tv_meal_instruction.text = instruction
+    }
+
+    override fun setIsFavorite(isFavorite: Boolean) {
+        toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon = if (isFavorite) {
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_24)
+        } else {
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_border_24)
         }
     }
 
+    override fun initActionBar(title: String, subtitle:String) {
+        with(activity as AppCompatActivity) {
+            setSupportActionBar(toolbar_recipe)
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setDisplayShowHomeEnabled(true)
+                setTitle(title)
+                setSubtitle(subtitle)
+            }
+        }
+        toolbar_recipe.setNavigationOnClickListener {
+            backPressed()
+        }
+    }
+
+    override fun showContent() {
+        meal_content.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+    }
+
+    override fun playVideo(id: String) {
+        watchYoutubeVideo(requireContext(), id)
+    }
+
+    override fun setOnPlayVideoClickListener(isExists: Boolean) {
+        if (isExists) {
+            button_play_video.setOnClickListener {
+                presenter.onWatchVideoClicked()
+            }
+        } else {
+            button_play_video.isEnabled = false
+        }
+    }
 
     private fun watchYoutubeVideo(context: Context, id: String) {
         val appIntent = Intent(
@@ -99,50 +143,12 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
 
     }
 
-    override fun setTitle(title: String) {
-        tv_meal_header.text = title
-    }
-
-    override fun setImage(url: String) {
-        imageLoader.loadInto(url, iv_meal_image)
-    }
-
-    override fun setRegion(region: String) {
-        tv_region.text = region
-    }
-
-    override fun setInstructions(instruction: String) {
-        tv_meal_instruction.text = instruction
-    }
-
-    override fun setIsFavorite(isFavorite: Boolean) {
-        if (isFavorite) {
-            toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_24)
-        } else {
-            toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.ic_baseline_bookmark_border_24
-                )
-        }
-    }
-
-    override fun showContent() {
-        meal_content.visibility = View.VISIBLE
-        progressBar.visibility = View.GONE
-    }
-
-    override fun runVideo(id: String) {
-        watchYoutubeVideo(requireContext(), id)
-    }
-
     private fun executeInjection() {
         App.instance.appComponent.inject(this)
     }
 
     private fun initRV() {
-        ingredientsAdapter = IngredientsRVAdapter(presenter.inngredientsListPresenter)
+        ingredientsAdapter = IngredientsRVAdapter(presenter.ingredientsListPresenter)
         with(rv_ingredients) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -153,19 +159,6 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
                 )
             )
             adapter = ingredientsAdapter
-        }
-    }
-
-    private fun initActionBar() {
-        with(activity as AppCompatActivity) {
-            setSupportActionBar(toolbar_recipe)
-            supportActionBar?.apply {
-                setDisplayHomeAsUpEnabled(true)
-                setDisplayShowHomeEnabled(true)
-            }
-        }
-        toolbar_recipe.setNavigationOnClickListener {
-            backPressed()
         }
     }
 

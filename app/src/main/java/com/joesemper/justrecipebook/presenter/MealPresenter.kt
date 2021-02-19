@@ -27,7 +27,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     @Inject
     lateinit var logger: ILogger
 
-    val inngredientsListPresenter = IngredientsListPresenter()
+    val ingredientsListPresenter = IngredientsListPresenter()
 
     class IngredientsListPresenter : IIngredientsListPresenter {
         val ingredients = mutableListOf<Ingredient>()
@@ -47,15 +47,11 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadFullMeal()
+        displayMeal()
     }
 
     fun onAddToFavoriteClicked(): Boolean {
-        if (currentMeal.isFavorite) {
-            removeMealFromFavorite()
-        } else {
-            addMealToFavorite()
-        }
+        addOrRemoveMealFromFavorite(currentMeal.isFavorite)
         return true
     }
 
@@ -65,61 +61,62 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     }
 
     fun onWatchVideoClicked() {
-        viewState.runVideo(currentMeal.strYoutubeId)
+        viewState.playVideo(currentMeal.strYoutubeId)
+    }
+
+
+    fun onOptionsMenuCreated() {
+        viewState.setIsFavorite(currentMeal.isFavorite)
+    }
+
+    private fun displayMeal() {
+        loadFullMeal()
     }
 
     private fun loadFullMeal() {
         dataManager.getMealById(currentMeal.idMeal)
             .observeOn(mainThreadScheduler)
             .subscribe({ meal ->
-                currentMeal = meal
-                displayMeal(meal)
+                onMealLoaded(meal)
             }, {
                 logger.log(it)
             })
     }
 
-    private fun displayMeal(meal: Meal) {
-        updateRV(meal)
+    private fun onMealLoaded(meal: Meal){
+        currentMeal = meal
         displayMealData(meal)
     }
 
-    private fun updateRV(meal: Meal) {
-        inngredientsListPresenter.ingredients.clear()
-        meal.ingredients?.let { inngredientsListPresenter.ingredients.addAll(it) }
-        viewState.updateList()
-    }
-
     private fun displayMealData(meal: Meal) {
+        updateRVIngredients(meal)
+
         with(viewState) {
+            initActionBar(meal.strMeal, meal.strArea)
             setImage(meal.strMealThumb)
-            setTitle(meal.strMeal)
+            setOnPlayVideoClickListener(meal.strYoutube != "")
             setInstructions(meal.strInstructions)
-            setRegion(meal.strArea)
-            setIsFavorite(meal.isFavorite)
             showContent()
         }
     }
 
-    private fun addMealToFavorite() {
+    private fun updateRVIngredients(meal: Meal) {
+        ingredientsListPresenter.ingredients.clear()
+        meal.ingredients?.let { ingredientsListPresenter.ingredients.addAll(it) }
+        viewState.updateList()
+    }
+
+    private fun addOrRemoveMealFromFavorite(isFavorite:Boolean) {
+        currentMeal.isFavorite = !isFavorite
+        viewState.setIsFavorite(!isFavorite)
         dataManager.putMealToFavorite(currentMeal)
             .observeOn(mainThreadScheduler)
             .subscribe({
-                viewState.showResult("Added to favorite")
-                viewState.setIsFavorite(true)
-                currentMeal.isFavorite = true
-            }, {
-                logger.log(it)
-            })
-    }
-
-    private fun removeMealFromFavorite() {
-        dataManager.deleteMealFromFavorite(currentMeal)
-            .observeOn(mainThreadScheduler)
-            .subscribe({
-                viewState.showResult("Removed from favorite")
-                viewState.setIsFavorite(false)
-                currentMeal.isFavorite = false
+                if(isFavorite) {
+                    viewState.showResult("Removed from favorite")
+                } else {
+                    viewState.showResult("Added to favorite")
+                }
             }, {
                 logger.log(it)
             })
