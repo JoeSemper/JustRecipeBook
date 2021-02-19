@@ -1,5 +1,9 @@
 package com.joesemper.justrecipebook.ui.fragments.meal
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -20,7 +24,8 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
-class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
+
+class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
 
     @Inject
     lateinit var imageLoader: IImageLoader<ImageView>
@@ -47,8 +52,9 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) :View? {
+    ): View? {
         setHasOptionsMenu(true)
+
         return View.inflate(context, R.layout.fragment_meal, null)
     }
 
@@ -58,17 +64,39 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-                R.id.menu_add_to_favorite -> presenter.onAddToFavoriteClicked()
-                R.id.menu_add_to_menu -> presenter.addToMenuClicked()
-                else -> super.onOptionsItemSelected(item)
-            }
+        return when (item.itemId) {
+            R.id.menu_add_to_favorite -> presenter.onAddToFavoriteClicked()
+            R.id.menu_add_to_menu -> presenter.addToMenuClicked()
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun init() {
         executeInjection()
         initRV()
         initActionBar()
+
+        button_play_video.setOnClickListener {
+            presenter.onWatchVideoClicked()
+        }
+    }
+
+
+    private fun watchYoutubeVideo(context: Context, id: String) {
+        val appIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("vnd.youtube:" + id)
+        );
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=" + id)
+        );
+        try {
+            context.startActivity(appIntent);
+        } catch (ex: ActivityNotFoundException) {
+            context.startActivity(webIntent);
+        }
+
     }
 
     override fun setTitle(title: String) {
@@ -93,7 +121,10 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_24)
         } else {
             toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_border_24)
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_bookmark_border_24
+                )
         }
     }
 
@@ -102,16 +133,25 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
         progressBar.visibility = View.GONE
     }
 
+    override fun runVideo(id: String) {
+        watchYoutubeVideo(requireContext(), id)
+    }
+
     private fun executeInjection() {
         App.instance.appComponent.inject(this)
     }
 
-    private fun initRV(){
+    private fun initRV() {
         ingredientsAdapter = IngredientsRVAdapter(presenter.inngredientsListPresenter)
         with(rv_ingredients) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(
+                DividerItemDecoration(
+                    this.context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
             adapter = ingredientsAdapter
         }
     }
@@ -124,7 +164,7 @@ class MealFragment: MvpAppCompatFragment(), MealView, BackButtonListener {
                 setDisplayShowHomeEnabled(true)
             }
         }
-        toolbar_recipe.setNavigationOnClickListener{
+        toolbar_recipe.setNavigationOnClickListener {
             backPressed()
         }
     }

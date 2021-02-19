@@ -12,6 +12,8 @@ class Meal(
     @Expose val strMealThumb: String,
     @Expose val strTags: String?,
     @Expose val strArea: String,
+    @Expose val strYoutube: String = "",
+    @Expose var strYoutubeId: String = "",
     var ingredients: MutableList<Ingredient>? = null,
     @Expose val strIngredient1: String? = "",
     @Expose val strIngredient2: String? = "",

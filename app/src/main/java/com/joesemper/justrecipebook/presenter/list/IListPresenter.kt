@@ -1,4 +1,6 @@
-package com.joesemper.justrecipebook.ui.interfaces
+package com.joesemper.justrecipebook.presenter.list
+
+import com.joesemper.justrecipebook.ui.interfaces.IItemView
 
 interface IListPresenter <V : IItemView>  {
 

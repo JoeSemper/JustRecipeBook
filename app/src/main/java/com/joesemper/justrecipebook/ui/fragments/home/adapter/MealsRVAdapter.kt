@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.joesemper.justrecipebook.R
+import com.joesemper.justrecipebook.presenter.list.IMealsListPresenter
 import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_meal.view.*

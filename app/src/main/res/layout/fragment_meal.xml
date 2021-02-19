@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_recipe"
+            style="@style/ActionBatTheme"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:textAlignment="center"
             app:layout_collapseMode="pin"
-            style="@style/ActionBatTheme"
             app:title="Recipe" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -143,8 +144,6 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_region"
@@ -162,6 +161,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_meal_header" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_play_video"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:text="Watch Video"
+                        app:backgroundTint="#EC7E7E"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_meal_image" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -224,6 +236,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

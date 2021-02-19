@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:hint="Meal"
+    android:label="@string/app_name"
+    android:searchSuggestAuthority="com.joesemper.justrecipebook.ui.utilite.provider.SuggestionProvider"
+    android:searchSuggestSelection=" ? "
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer">
+
+</searchable>

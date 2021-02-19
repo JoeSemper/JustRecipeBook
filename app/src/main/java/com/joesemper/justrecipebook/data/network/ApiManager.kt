@@ -73,6 +73,7 @@ class ApiManager(val api: IDataSource) : IApiManager {
             addIngredientToList(meal, strIngredient18, strMeasure18)
             addIngredientToList(meal, strIngredient19, strMeasure19)
             addIngredientToList(meal, strIngredient20, strMeasure20)
+            meal.strYoutubeId = parseUrl(meal.strYoutube)
         }
         return meal
     }
@@ -84,5 +85,9 @@ class ApiManager(val api: IDataSource) : IApiManager {
     }
 
     private fun checkIngredientNotNull(ingredient: String?) = (ingredient != "")
+
+    private fun parseUrl(url: String): String {
+        return url.split("=")[1]
+    }
 
 }

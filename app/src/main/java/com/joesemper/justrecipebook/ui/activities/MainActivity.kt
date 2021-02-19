@@ -1,17 +1,25 @@
 package com.joesemper.justrecipebook.ui.activities
 
 import android.os.Bundle
-import android.view.View
+import androidx.fragment.app.*
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
+import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesFragment
+import com.joesemper.justrecipebook.ui.fragments.home.HomeFragment
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
+import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import javax.inject.Inject
+
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
@@ -26,9 +34,17 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
+    private lateinit var viewPager: ViewPager2
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        viewPager = findViewById(R.id.pager)
+//
+//        val pagerAdapter = ScreenSlidePagerAdapter(this)
+//        viewPager.adapter = pagerAdapter
 
         initInjection()
         initBottomNav()
@@ -68,5 +84,19 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             }
         }
         presenter.backClicked()
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 3
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> HomeFragment.newInstance(SearchType.QUERY, "")
+                1 -> CategoriesFragment.newInstance()
+                2 -> HomeFragment.newInstance(SearchType.FAVORITE)
+                else -> HomeFragment.newInstance(SearchType.QUERY, "")
+            }
+    }
+
     }
 }

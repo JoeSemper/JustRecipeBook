@@ -14,13 +14,6 @@ import javax.inject.Inject
 
 class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsCache, val logger: ILogger) : IDbManager {
 
-//    init {
-//        App.instance.appComponent.inject(this)
-//    }
-//
-//    @Inject
-//    lateinit var logger: ILogger
-
     override fun getSavedMeals() = mealsCache.getMeals().flatMap { meals ->
         mapIngredientsToMeal(meals)
     }.subscribeOn(Schedulers.io())

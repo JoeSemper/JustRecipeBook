@@ -18,6 +18,9 @@ class RoomMealsCache(val db: Database) : IMealsCache {
                 strTags = roomMeal.strTags,
                 strMealThumb = roomMeal.strMealThumb,
                 strInstructions = roomMeal.strInstructions,
+                strYoutube = roomMeal.strYoutube,
+                strYoutubeId = roomMeal.strYoutubeId,
+
             )
         }
     }
@@ -30,7 +33,10 @@ class RoomMealsCache(val db: Database) : IMealsCache {
                 strArea = meal.strArea,
                 strTags = meal.strTags,
                 strMealThumb = meal.strMealThumb,
-                strInstructions = meal.strInstructions
+                strInstructions = meal.strInstructions,
+                strYoutube = meal.strYoutube,
+                strYoutubeId = meal.strYoutubeId,
+
             )
         }
         db.mealDao.insert(roomMeal)
@@ -47,8 +53,11 @@ class RoomMealsCache(val db: Database) : IMealsCache {
             strArea = meal.strArea,
             strTags = meal.strTags ?: "",
             strMealThumb = meal.strMealThumb,
-            strInstructions = meal.strInstructions
-        )
+            strInstructions = meal.strInstructions,
+            strYoutube = meal.strYoutube,
+            strYoutubeId = meal.strYoutubeId,
+
+            )
         db.mealDao.insert(roomMeal)
     }
 

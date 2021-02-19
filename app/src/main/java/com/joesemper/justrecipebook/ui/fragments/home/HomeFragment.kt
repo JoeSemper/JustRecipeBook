@@ -1,5 +1,7 @@
 package com.joesemper.justrecipebook.ui.fragments.home
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -17,7 +19,6 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
-
 
     companion object {
         private const val MEAL_ARG = "MEAL"
@@ -39,7 +40,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         }
     }
 
-    private var adapter: MealsRVAdapter? = null
+    private var mealsAdapter: MealsRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +56,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         inflater.inflate(R.menu.menu_home, menu)
         val item = menu.findItem(R.id.action_search)
         val searchView = item.actionView as SearchView
+
         initSearch(searchView)
     }
 
@@ -64,17 +66,23 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     }
 
     private fun initRV() {
-        rv_meals.layoutManager = GridLayoutManager(context, 3)
-        rv_meals.setHasFixedSize(true)
-        adapter = MealsRVAdapter(presenter.mealsListPresenter).apply {
+        mealsAdapter = MealsRVAdapter(presenter.mealsListPresenter).apply {
             App.instance.appComponent.inject(this)
         }
-        rv_meals.adapter = adapter
+        with(rv_meals) {
+            layoutManager = GridLayoutManager(context, 3)
+            setHasFixedSize(true)
+            adapter = mealsAdapter
+        }
+
     }
 
     private fun initSearch(searchView: SearchView) {
         val listener = QueryListener(presenter, searchView)
         searchView.setOnQueryTextListener(listener)
+        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+        searchView.setIconifiedByDefault(false)
     }
 
     private fun initActionBar() {
@@ -84,7 +92,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     }
 
     override fun updateList() {
-        adapter?.notifyDataSetChanged()
+        mealsAdapter?.notifyDataSetChanged()
     }
 
     override fun showResult(text: String) {

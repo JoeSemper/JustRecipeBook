@@ -4,13 +4,14 @@ import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.network.model.Ingredient
 import com.joesemper.justrecipebook.data.network.model.Meal
 import com.joesemper.justrecipebook.ui.fragments.meal.MealView
-import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IIngredientsListPresenter
+import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
+import kotlin.system.measureNanoTime
 
 class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
@@ -61,6 +62,10 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     fun addToMenuClicked(): Boolean {
         viewState.showResult("Add to menu clicked")
         return true
+    }
+
+    fun onWatchVideoClicked() {
+        viewState.runVideo(currentMeal.strYoutubeId)
     }
 
     private fun loadFullMeal() {

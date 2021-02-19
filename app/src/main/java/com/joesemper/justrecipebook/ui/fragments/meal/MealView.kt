@@ -15,4 +15,5 @@ interface MealView: MvpView {
     fun setRegion(region: String)
     fun setIsFavorite(isFavorite: Boolean)
     fun showContent()
+    fun runVideo(id: String)
 }
