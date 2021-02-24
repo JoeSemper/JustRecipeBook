@@ -118,11 +118,11 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
 
     override fun setOnPlayVideoClickListener(isExists: Boolean) {
         if (isExists) {
-            button_play_video.setOnClickListener {
+            fab_play_video.setOnClickListener {
                 presenter.onWatchVideoClicked()
             }
         } else {
-            button_play_video.isEnabled = false
+            fab_play_video.isEnabled = false
         }
     }
 

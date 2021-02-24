@@ -1,5 +1,6 @@
-package com.joesemper.justrecipebook.ui.activities
+package com.joesemper.justrecipebook.presenter
 
+import com.joesemper.justrecipebook.ui.activities.MainView
 import com.joesemper.justrecipebook.ui.navigation.Screens
 import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
 import moxy.MvpPresenter

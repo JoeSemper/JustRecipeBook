@@ -7,5 +7,8 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface CategoriesView: MvpView {
     fun init()
-    fun updateLis()
+    fun initCategories()
+    fun initAries()
+    fun updateCategoriesList()
+    fun updateAriesList()
 }

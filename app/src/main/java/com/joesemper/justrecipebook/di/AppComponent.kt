@@ -3,7 +3,7 @@ package com.joesemper.justrecipebook.di
 import com.joesemper.justrecipebook.data.db.IDbManager
 import com.joesemper.justrecipebook.di.modules.*
 import com.joesemper.justrecipebook.ui.activities.MainActivity
-import com.joesemper.justrecipebook.ui.activities.MainPresenter
+import com.joesemper.justrecipebook.presenter.MainPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.presenter.CategoriesPresenter

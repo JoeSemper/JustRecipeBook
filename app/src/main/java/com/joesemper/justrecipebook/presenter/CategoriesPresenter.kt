@@ -48,11 +48,15 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
-        loadData()
         setOnClickListeners()
     }
 
-    private fun loadData() {
+    fun onCategoriesCreated() {
+        viewState.initCategories()
+        loadCategories()
+    }
+
+    private fun loadCategories() {
         dataManager.getAllCategories()
             .observeOn(mainThreadScheduler)
             .subscribe({ categories ->
@@ -72,7 +76,7 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
     private fun updateCategoriesList(categories: List<Category>) {
         categoriesListPresenter.categories.clear()
         categoriesListPresenter.categories.addAll(categories)
-        viewState.updateLis()
+        viewState.updateCategoriesList()
     }
 
     private fun getScreenByPosition(pos: Int): Screen {

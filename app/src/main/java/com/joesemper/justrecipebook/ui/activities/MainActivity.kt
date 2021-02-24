@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.fragment.app.*
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
+import com.joesemper.justrecipebook.presenter.MainPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesFragment
 import com.joesemper.justrecipebook.ui.fragments.home.HomeFragment
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
