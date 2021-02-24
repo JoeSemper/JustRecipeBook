@@ -1,11 +1,13 @@
 package com.joesemper.justrecipebook.data.network
 
+import com.joesemper.justrecipebook.data.model.Area
 import com.joesemper.justrecipebook.data.network.api.IDataSource
-import com.joesemper.justrecipebook.data.network.model.Category
-import com.joesemper.justrecipebook.data.network.model.Ingredient
-import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.data.model.Category
+import com.joesemper.justrecipebook.data.model.Ingredient
+import com.joesemper.justrecipebook.data.model.Meal
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlin.system.measureNanoTime
 
 class ApiManager(val api: IDataSource) : IApiManager {
 
@@ -25,10 +27,26 @@ class ApiManager(val api: IDataSource) : IApiManager {
         }.subscribeOn(Schedulers.io())
     }
 
+    override fun getMealsByArea(area: String): Single<List<Meal>> {
+        return api.getMealsByArea(area).flatMap { meals ->
+            Single.fromCallable {
+                meals.meals.toList()
+            }
+        }.subscribeOn(Schedulers.io())
+    }
+
     override fun getAllCategories(): Single<List<Category>> {
         return api.getAllCategories().flatMap { categories ->
             Single.fromCallable {
                 categories.categories.toList()
+            }
+        }.subscribeOn(Schedulers.io())
+    }
+
+    override fun getAllAreas(): Single<List<Area>> {
+        return api.getAllAreas().flatMap { areas ->
+            Single.fromCallable {
+                areas.areas.toList()
             }
         }.subscribeOn(Schedulers.io())
     }

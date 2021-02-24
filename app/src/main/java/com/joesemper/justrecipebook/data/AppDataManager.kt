@@ -1,9 +1,10 @@
 package com.joesemper.justrecipebook.data
 
 import com.joesemper.justrecipebook.data.db.IDbManager
+import com.joesemper.justrecipebook.data.model.Area
 import com.joesemper.justrecipebook.data.network.IApiManager
-import com.joesemper.justrecipebook.data.network.model.Category
-import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.data.model.Category
+import com.joesemper.justrecipebook.data.model.Meal
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
@@ -16,12 +17,17 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataM
             }
         }
 
-
     override fun getMealByCategory(category: String): Single<List<Meal>> =
         apiManager.getMealsByCategory(category)
 
+    override fun getMealsByArea(area: String): Single<List<Meal>> =
+        apiManager.getMealsByArea(area)
+
     override fun getAllCategories(): Single<List<Category>> =
         apiManager.getAllCategories()
+
+    override fun getAllAreas(): Single<List<Area>> =
+        apiManager.getAllAreas()
 
     override fun getSingleRandomMeal(): Single<Meal> =
         apiManager.getSingleRandomMeal()

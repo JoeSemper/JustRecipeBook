@@ -1,4 +1,4 @@
-package com.joesemper.justrecipebook.data.network.model
+package com.joesemper.justrecipebook.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

@@ -4,8 +4,8 @@ import android.util.Log
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.data.db.cache.ingredients.IIngredientsCache
 import com.joesemper.justrecipebook.data.db.cache.meals.IMealsCache
-import com.joesemper.justrecipebook.data.network.model.Ingredient
-import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.data.model.Ingredient
+import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single

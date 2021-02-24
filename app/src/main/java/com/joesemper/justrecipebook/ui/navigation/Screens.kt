@@ -1,6 +1,6 @@
 package com.joesemper.justrecipebook.ui.navigation
 
-import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesFragment
 import com.joesemper.justrecipebook.ui.fragments.home.HomeFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment

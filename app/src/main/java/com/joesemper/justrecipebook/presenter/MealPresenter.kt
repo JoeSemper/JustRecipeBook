@@ -1,8 +1,8 @@
 package com.joesemper.justrecipebook.presenter
 
 import com.joesemper.justrecipebook.data.DataManager
-import com.joesemper.justrecipebook.data.network.model.Ingredient
-import com.joesemper.justrecipebook.data.network.model.Meal
+import com.joesemper.justrecipebook.data.model.Ingredient
+import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
