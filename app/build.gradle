@@ -28,6 +28,12 @@ android {
         }
     }
 
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def mealApiKey  = properties.getProperty("meal_db_api_key", "")
+        it.buildConfigField "String", "MEAL_DB_API_KEY", mealApiKey
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

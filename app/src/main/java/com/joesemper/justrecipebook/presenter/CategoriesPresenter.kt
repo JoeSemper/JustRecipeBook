@@ -102,12 +102,12 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
 
     private fun setOnClickListeners() {
         categoriesListPresenter.itemClickListener = { categoryItemView ->
-            val screen = getScreenByPosition(categoryItemView.pos)
+            val screen = getCategoriesScreenByPosition(categoryItemView.pos)
             router.navigateTo(screen)
         }
 
         areasListPresenter.itemClickListener = { areaItemView ->
-            val screen = getScreenByPosition(areaItemView.pos)
+            val screen = getAreaScreenByPosition(areaItemView.pos)
             router.navigateTo(screen)
         }
     }
@@ -124,11 +124,16 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
         viewState.updateAriesList()
     }
 
-
-    private fun getScreenByPosition(pos: Int): Screen {
+    private fun getCategoriesScreenByPosition(pos: Int): Screen {
         val query = categoriesListPresenter.categories[pos].strCategory
         val category = SearchType.CATEGORY
         return Screens.HomeScreen(category, query)
+    }
+
+    private fun getAreaScreenByPosition(pos: Int): Screen {
+        val query = areasListPresenter.areas[pos].strArea
+        val searchType = SearchType.AREA
+        return Screens.HomeScreen(searchType, query)
     }
 
     fun backPressed(): Boolean {

@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.joesemper.justrecipebook.App
+import com.joesemper.justrecipebook.BuildConfig
 import com.joesemper.justrecipebook.data.network.ApiManager
 import com.joesemper.justrecipebook.data.network.IApiManager
 import com.joesemper.justrecipebook.data.network.api.IDataSource
@@ -26,7 +27,7 @@ class ApiModule {
 
     @Named("apiKey")
     @Provides
-    fun apiKey(): String = "1/"
+    fun apiKey(): String = BuildConfig.MEAL_DB_API_KEY + "/"
 
 
     @Singleton

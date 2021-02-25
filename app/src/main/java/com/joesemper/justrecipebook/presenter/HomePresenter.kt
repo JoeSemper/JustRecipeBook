@@ -60,6 +60,7 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
             SearchType.QUERY -> searchMealByQuery(query)
             SearchType.CATEGORY -> searchMealByCategory()
             SearchType.FAVORITE -> getFavoriteMeals()
+            SearchType.AREA -> searchMealsByArea()
             else -> searchMealByQuery(query)
         }
     }
@@ -77,6 +78,17 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
     private fun searchMealByCategory() {
         if (query != null)
             dataManager.getMealByCategory(query)
+                .observeOn(mainThreadScheduler)
+                .subscribe({ meals ->
+                    updateMealsList(meals)
+                }, {
+                    logger.log(it)
+                })
+    }
+
+    private fun searchMealsByArea() {
+        if(query != null)
+            dataManager.getMealsByArea(query)
                 .observeOn(mainThreadScheduler)
                 .subscribe({ meals ->
                     updateMealsList(meals)

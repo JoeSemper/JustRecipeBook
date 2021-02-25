@@ -46,7 +46,7 @@ class ApiManager(val api: IDataSource) : IApiManager {
     override fun getAllAreas(): Single<List<Area>> {
         return api.getAllAreas().flatMap { areas ->
             Single.fromCallable {
-                areas.areas.toList()
+                areas.meals.toList()
             }
         }.subscribeOn(Schedulers.io())
     }

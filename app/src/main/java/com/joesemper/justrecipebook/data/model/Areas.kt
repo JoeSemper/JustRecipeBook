@@ -6,5 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Areas(
-    @Expose val areas: List<Area>
+    @Expose val meals: List<Area>
 ): Parcelable
