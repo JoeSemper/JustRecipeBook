@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -14,7 +13,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.CategoriesPresenter
-import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.categories.inner.AriesInnerFragment
 import com.joesemper.justrecipebook.ui.fragments.categories.inner.AriesInnerView
 import com.joesemper.justrecipebook.ui.fragments.categories.inner.CategoriesInnerFragment
@@ -55,7 +53,7 @@ class CategoriesFragment : MvpAppCompatFragment(), CategoriesView, BackButtonLis
     }
 
     private fun initViewPager() {
-        viewPager = requireActivity().findViewById(R.id.view_pager)
+        viewPager = requireActivity().findViewById(R.id.view_pager_categories)
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
     }
@@ -84,6 +82,11 @@ class CategoriesFragment : MvpAppCompatFragment(), CategoriesView, BackButtonLis
 
     override fun updateAriesList() {
         ariesView?.updateList()
+    }
+
+    override fun showContent() {
+        progressbar_categories.visibility = View.GONE
+        content_categories.visibility =View.VISIBLE
     }
 
     override fun backPressed() = presenter.backPressed()

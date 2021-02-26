@@ -11,4 +11,5 @@ interface CategoriesView: MvpView {
     fun initAries()
     fun updateCategoriesList()
     fun updateAriesList()
+    fun showContent()
 }

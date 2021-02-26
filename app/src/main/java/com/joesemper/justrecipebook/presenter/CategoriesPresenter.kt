@@ -116,6 +116,7 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
         categoriesListPresenter.categories.clear()
         categoriesListPresenter.categories.addAll(categories)
         viewState.updateCategoriesList()
+        viewState.showContent()
     }
 
     private fun updateAreasList(areas: List<Area>) {

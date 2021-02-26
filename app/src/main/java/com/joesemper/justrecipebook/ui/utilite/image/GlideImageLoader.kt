@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestListener
+import com.joesemper.justrecipebook.R
 
 class GlideImageLoader : IImageLoader<ImageView> {
     override fun loadInto(url: String, container: ImageView) {

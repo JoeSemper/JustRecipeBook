@@ -86,9 +86,9 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
 
     override fun setIsFavorite(isFavorite: Boolean) {
         toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon = if (isFavorite) {
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_24)
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_24)
         } else {
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_bookmark_border_24)
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_border_24)
         }
     }
 
@@ -99,8 +99,9 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
                 setDisplayHomeAsUpEnabled(true)
                 setDisplayShowHomeEnabled(true)
                 setTitle(title)
-                setSubtitle(subtitle)
+//                setSubtitle(subtitle)
             }
+//            collapsing_toolbar.subtitle = subtitle
         }
         toolbar_recipe.setNavigationOnClickListener {
             backPressed()

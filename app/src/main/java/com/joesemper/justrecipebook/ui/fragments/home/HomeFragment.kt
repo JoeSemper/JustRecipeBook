@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
@@ -70,7 +71,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
             App.instance.appComponent.inject(this)
         }
         with(rv_meals) {
-            layoutManager = GridLayoutManager(context, 3)
+            layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
             adapter = mealsAdapter
         }
