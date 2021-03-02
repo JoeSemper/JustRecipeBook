@@ -16,6 +16,7 @@ import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_meal.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -81,8 +82,8 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     private fun initSearch(searchView: SearchView) {
         val listener = QueryListener(presenter, searchView)
         searchView.setOnQueryTextListener(listener)
-        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+//        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         searchView.setIconifiedByDefault(false)
     }
 

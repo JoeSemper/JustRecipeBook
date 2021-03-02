@@ -65,8 +65,9 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_add_to_favorite -> presenter.onAddToFavoriteClicked()
-            R.id.menu_add_to_menu -> presenter.addToMenuClicked()
+            R.id.item_add_to_favorite -> presenter.onAddToFavoriteClicked()
+            R.id.item_add_to_cart -> presenter.onAddToCartClicked()
+            R.id.item_play_video -> presenter.onWatchVideoClicked()
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -84,8 +85,10 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
         tv_meal_instruction.text = instruction
     }
 
+
+
     override fun setIsFavorite(isFavorite: Boolean) {
-        toolbar_recipe.menu.findItem(R.id.menu_add_to_favorite).icon = if (isFavorite) {
+        toolbar_recipe.menu.findItem(R.id.item_add_to_favorite).icon = if (isFavorite) {
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_24)
         } else {
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_favorite_border_24)
@@ -99,9 +102,7 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
                 setDisplayHomeAsUpEnabled(true)
                 setDisplayShowHomeEnabled(true)
                 setTitle(title)
-//                setSubtitle(subtitle)
             }
-//            collapsing_toolbar.subtitle = subtitle
         }
         toolbar_recipe.setNavigationOnClickListener {
             backPressed()
@@ -118,13 +119,13 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
     }
 
     override fun setOnPlayVideoClickListener(isExists: Boolean) {
-        if (isExists) {
-            fab_play_video.setOnClickListener {
-                presenter.onWatchVideoClicked()
-            }
-        } else {
-            fab_play_video.isEnabled = false
-        }
+//        if (isExists) {
+//            fab_play_video.setOnClickListener {
+//                presenter.onWatchVideoClicked()
+//            }
+//        } else {
+//            fab_play_video.isEnabled = false
+//        }
     }
 
     private fun watchYoutubeVideo(context: Context, id: String) {
@@ -153,12 +154,6 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
         with(rv_ingredients) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            addItemDecoration(
-                DividerItemDecoration(
-                    this.context,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
             adapter = ingredientsAdapter
         }
     }

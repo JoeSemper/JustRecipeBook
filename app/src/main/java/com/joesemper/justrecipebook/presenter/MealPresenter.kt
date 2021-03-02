@@ -55,13 +55,11 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         return true
     }
 
-    fun addToMenuClicked(): Boolean {
-        viewState.showResult("Add to menu clicked")
-        return true
-    }
+    fun onAddToCartClicked():Boolean {return true}
 
-    fun onWatchVideoClicked() {
+    fun onWatchVideoClicked(): Boolean {
         viewState.playVideo(currentMeal.strYoutubeId)
+        return true
     }
 
 

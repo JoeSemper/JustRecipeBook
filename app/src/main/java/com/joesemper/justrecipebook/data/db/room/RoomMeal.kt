@@ -11,6 +11,7 @@ class RoomMeal(
     var strMealThumb: String,
     var strTags: String?,
     var strArea: String,
+    var strCategory: String,
     var strYoutube: String,
     var strYoutubeId: String,
 )
