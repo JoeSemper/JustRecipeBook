@@ -8,12 +8,13 @@ import moxy.viewstate.strategy.StateStrategyType
 interface MealView: MvpView {
     fun init()
     fun showResult(text:String)
-    fun updateList()
     fun setImage(url: String)
-    fun setInstructions(instruction: String)
+    fun initIngredients()
+    fun initInstruction()
+    fun setInstruction(text: String)
+    fun updateIngredientsList()
     fun setIsFavorite(isFavorite: Boolean)
     fun showContent()
     fun playVideo(id: String)
-    fun setOnPlayVideoClickListener(isExists: Boolean)
     fun initActionBar(title: String, subtitle:String)
 }

@@ -46,28 +46,6 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
-        displayMeal()
-    }
-
-    fun onAddToFavoriteClicked(): Boolean {
-        addOrRemoveMealFromFavorite(currentMeal.isFavorite)
-        return true
-    }
-
-    fun onAddToCartClicked():Boolean {return true}
-
-    fun onWatchVideoClicked(): Boolean {
-        viewState.playVideo(currentMeal.strYoutubeId)
-        return true
-    }
-
-
-    fun onOptionsMenuCreated() {
-        viewState.setIsFavorite(currentMeal.isFavorite)
-    }
-
-    private fun displayMeal() {
         loadFullMeal()
     }
 
@@ -83,25 +61,50 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     private fun onMealLoaded(meal: Meal){
         currentMeal = meal
+        viewState.init()
         displayMealData(meal)
     }
 
     private fun displayMealData(meal: Meal) {
-        updateRVIngredients(meal)
-
         with(viewState) {
             initActionBar(meal.strMeal, meal.strArea)
             setImage(meal.strMealThumb)
-            setOnPlayVideoClickListener(meal.strYoutube != "")
-            setInstructions(meal.strInstructions)
-            showContent()
         }
     }
 
-    private fun updateRVIngredients(meal: Meal) {
+    fun onIngredientsReady() {
+        viewState.initIngredients()
+        updateIngredients()
+        viewState.showContent()
+    }
+
+    fun onInstructionReady() {
+        with(viewState) {
+            initInstruction()
+            setInstruction(currentMeal.strInstructions)
+        }
+    }
+
+    fun onAddToFavoriteClicked(): Boolean {
+        addOrRemoveMealFromFavorite(currentMeal.isFavorite)
+        return true
+    }
+
+    fun onAddToCartClicked():Boolean {return true}
+
+    fun onWatchVideoClicked(): Boolean {
+        viewState.playVideo(currentMeal.strYoutubeId)
+        return true
+    }
+
+    fun onOptionsMenuCreated() {
+        viewState.setIsFavorite(currentMeal.isFavorite)
+    }
+
+    private fun updateIngredients() {
         ingredientsListPresenter.ingredients.clear()
-        meal.ingredients?.let { ingredientsListPresenter.ingredients.addAll(it) }
-        viewState.updateList()
+        currentMeal.ingredients?.let { ingredientsListPresenter.ingredients.addAll(it) }
+        viewState.updateIngredientsList()
     }
 
     private fun addOrRemoveMealFromFavorite(isFavorite:Boolean) {

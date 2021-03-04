@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/textOnSecondary</item>
+        <item name="colorAccent">#E6918F</item>
         <item name="android:textColorPrimary">@color/textOnPrimary</item>
         <item name="android:textColorSecondary">@color/textOnPrimary</item>
         <item name="actionMenuTextColor">@android:color/white</item>
