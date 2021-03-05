@@ -6,7 +6,6 @@ import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.data.model.Meal
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class RoomIngredientsCache(val db: Database): IIngredientsCache {
 

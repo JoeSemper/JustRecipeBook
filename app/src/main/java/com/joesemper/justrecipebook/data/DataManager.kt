@@ -2,6 +2,7 @@ package com.joesemper.justrecipebook.data
 
 import com.joesemper.justrecipebook.data.model.Area
 import com.joesemper.justrecipebook.data.model.Category
+import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.data.model.Meal
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -18,4 +19,8 @@ interface DataManager {
     fun putMealToFavorite(meal: Meal): Completable
     fun getFavoriteMeals(): Single<List<Meal>>
     fun deleteMealFromFavorite(meal: Meal): Completable
+    fun getAllCartIngredients(): Single<List<Ingredient>>
+    fun putIngredient(ingredient: Ingredient): Completable
+    fun updateIngredient(ingredient: Ingredient): Completable
+    fun deleteIngredient(ingredient: Ingredient): Completable
 }

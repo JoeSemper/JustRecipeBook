@@ -4,6 +4,8 @@ import androidx.room.Room
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.data.db.DbManager
 import com.joesemper.justrecipebook.data.db.IDbManager
+import com.joesemper.justrecipebook.data.db.cache.cart.ICartCache
+import com.joesemper.justrecipebook.data.db.cache.cart.RoomCartCache
 import com.joesemper.justrecipebook.data.db.cache.meals.IMealsCache
 import com.joesemper.justrecipebook.data.db.cache.ingredients.IIngredientsCache
 import com.joesemper.justrecipebook.data.db.cache.ingredients.RoomIngredientsCache
@@ -18,7 +20,8 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Singleton
     @Provides
-    fun database(app: App) = Room.databaseBuilder(app, Database::class.java, Database.DB_NAME).build()
+    fun database(app: App) =
+        Room.databaseBuilder(app, Database::class.java, Database.DB_NAME).build()
 
     @Singleton
     @Provides
@@ -34,8 +37,19 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun getCache(mealsCache: IMealsCache, ingredientsCache: IIngredientsCache, logger: ILogger): IDbManager {
-        return DbManager(mealsCache, ingredientsCache, logger)
+    fun cartCache(database: Database): ICartCache {
+        return RoomCartCache(database)
+    }
+
+    @Singleton
+    @Provides
+    fun getCache(
+        mealsCache: IMealsCache,
+        ingredientsCache: IIngredientsCache,
+        cartCache: ICartCache,
+        logger: ILogger
+    ): IDbManager {
+        return DbManager(mealsCache, ingredientsCache, cartCache, logger)
     }
 
 }

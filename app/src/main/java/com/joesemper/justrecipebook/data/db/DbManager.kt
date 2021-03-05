@@ -2,6 +2,7 @@ package com.joesemper.justrecipebook.data.db
 
 import android.util.Log
 import com.joesemper.justrecipebook.App
+import com.joesemper.justrecipebook.data.db.cache.cart.ICartCache
 import com.joesemper.justrecipebook.data.db.cache.ingredients.IIngredientsCache
 import com.joesemper.justrecipebook.data.db.cache.meals.IMealsCache
 import com.joesemper.justrecipebook.data.model.Ingredient
@@ -12,7 +13,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
-class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsCache, val logger: ILogger) : IDbManager {
+class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsCache, val cartCache: ICartCache, val logger: ILogger) : IDbManager {
 
     override fun getSavedMeals() = mealsCache.getMeals().flatMap { meals ->
         mapIngredientsToMeal(meals)
@@ -63,4 +64,12 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
             logger.log(it)
         })
     }
+
+    override fun getAllCartIngredients() = cartCache.getAllIngredients()
+
+    override fun putIngredient(ingredient: Ingredient) = cartCache.putIngredient(ingredient)
+
+    override fun updateIngredient(ingredient: Ingredient) = cartCache.updateIngredient(ingredient)
+
+    override fun deleteIngredient(ingredient: Ingredient) = cartCache.deleteIngredient(ingredient)
 }

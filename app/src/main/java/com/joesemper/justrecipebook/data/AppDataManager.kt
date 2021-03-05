@@ -4,6 +4,7 @@ import com.joesemper.justrecipebook.data.db.IDbManager
 import com.joesemper.justrecipebook.data.model.Area
 import com.joesemper.justrecipebook.data.network.IApiManager
 import com.joesemper.justrecipebook.data.model.Category
+import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.data.model.Meal
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -50,4 +51,12 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataM
         )
         return meal
     }
+
+    override fun getAllCartIngredients() = cache.getAllCartIngredients()
+
+    override fun putIngredient(ingredient: Ingredient) = cache.putIngredient(ingredient)
+
+    override fun updateIngredient(ingredient: Ingredient) = cache.updateIngredient(ingredient)
+
+    override fun deleteIngredient(ingredient: Ingredient) = cache.deleteIngredient(ingredient)
 }
