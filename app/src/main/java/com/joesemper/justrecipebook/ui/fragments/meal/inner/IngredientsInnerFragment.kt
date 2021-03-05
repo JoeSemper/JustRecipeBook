@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.MealPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
@@ -31,7 +32,9 @@ class IngredientsInnerFragment(val presenter: MealPresenter): Fragment(), Ingred
     }
 
     override fun init() {
-        ingredientsAdapter = IngredientsRVAdapter(presenter.ingredientsListPresenter)
+        ingredientsAdapter = IngredientsRVAdapter(presenter.ingredientsListPresenter).apply {
+            App.instance.appComponent.inject(this)
+        }
         with(rv_ingredients) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)

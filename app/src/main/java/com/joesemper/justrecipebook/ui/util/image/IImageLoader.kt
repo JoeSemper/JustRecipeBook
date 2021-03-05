@@ -1,4 +1,4 @@
-package com.joesemper.justrecipebook.ui.utilite.image
+package com.joesemper.justrecipebook.ui.util.image
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView

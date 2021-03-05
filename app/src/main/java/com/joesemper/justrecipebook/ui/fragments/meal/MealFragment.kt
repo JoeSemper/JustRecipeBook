@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -22,16 +20,12 @@ import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.presenter.MealPresenter
-import com.joesemper.justrecipebook.ui.fragments.categories.inner.AriesInnerFragment
-import com.joesemper.justrecipebook.ui.fragments.categories.inner.CategoriesInnerFragment
-import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
-import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.IngredientsInnerFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.IngredientsInnerView
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.InstructionInnerFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.InstructionInnerView
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
-import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
+import com.joesemper.justrecipebook.ui.util.image.IImageLoader
 import kotlinx.android.synthetic.main.fragment_meal.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter

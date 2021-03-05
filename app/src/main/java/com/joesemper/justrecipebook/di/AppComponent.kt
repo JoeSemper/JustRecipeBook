@@ -10,6 +10,7 @@ import com.joesemper.justrecipebook.presenter.CategoriesPresenter
 import com.joesemper.justrecipebook.presenter.HomePresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
 import com.joesemper.justrecipebook.presenter.MealPresenter
+import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -36,5 +37,6 @@ interface AppComponent {
     fun inject(mealFragment: MealFragment)
     fun inject(categoriesPresenter: CategoriesPresenter)
     fun inject(categoriesRVAdapter: CategoriesRVAdapter)
+    fun inject(ingredientsRVAdapter: IngredientsRVAdapter)
     fun inject(dbManager: IDbManager)
 }

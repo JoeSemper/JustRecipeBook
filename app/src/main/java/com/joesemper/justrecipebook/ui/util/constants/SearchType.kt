@@ -1,4 +1,4 @@
-package com.joesemper.justrecipebook.ui.utilite.constants
+package com.joesemper.justrecipebook.ui.util.constants
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

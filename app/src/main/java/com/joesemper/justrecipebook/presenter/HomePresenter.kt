@@ -6,7 +6,7 @@ import com.joesemper.justrecipebook.ui.fragments.home.HomeView
 import com.joesemper.justrecipebook.presenter.list.IMealsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealItemView
 import com.joesemper.justrecipebook.ui.navigation.Screens
-import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import com.joesemper.justrecipebook.ui.util.constants.SearchType
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter

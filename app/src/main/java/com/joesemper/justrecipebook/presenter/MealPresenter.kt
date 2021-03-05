@@ -37,8 +37,13 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         override fun bindView(view: IngredientItemView) {
             val ingredient = ingredients[view.pos]
 
-            ingredient.ingredient.let { view.setIngredient(it) }
-            ingredient.measure?.let { view.setMeasure(it) }
+            ingredient.ingredient.let {
+                view.setIngredient(it)
+                view.loadImage(it)
+            }
+            ingredient.measure?.let {
+                view.setMeasure(it)
+            }
         }
 
         override fun getCount(): Int = ingredients.size
@@ -59,7 +64,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
             })
     }
 
-    private fun onMealLoaded(meal: Meal){
+    private fun onMealLoaded(meal: Meal) {
         currentMeal = meal
         viewState.init()
         displayMealData(meal)
@@ -90,7 +95,9 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         return true
     }
 
-    fun onAddToCartClicked():Boolean {return true}
+    fun onAddToCartClicked(): Boolean {
+        return true
+    }
 
     fun onWatchVideoClicked(): Boolean {
         viewState.playVideo(currentMeal.strYoutubeId)
@@ -107,13 +114,13 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         viewState.updateIngredientsList()
     }
 
-    private fun addOrRemoveMealFromFavorite(isFavorite:Boolean) {
+    private fun addOrRemoveMealFromFavorite(isFavorite: Boolean) {
         currentMeal.isFavorite = !isFavorite
         viewState.setIsFavorite(!isFavorite)
         dataManager.putMealToFavorite(currentMeal)
             .observeOn(mainThreadScheduler)
             .subscribe({
-                if(isFavorite) {
+                if (isFavorite) {
                     viewState.showResult("Removed from favorite")
                 } else {
                     viewState.showResult("Added to favorite")

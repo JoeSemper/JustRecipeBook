@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.list.IMealsListPresenter
-import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
+import com.joesemper.justrecipebook.ui.util.image.IImageLoader
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_meal.view.*
 import javax.inject.Inject

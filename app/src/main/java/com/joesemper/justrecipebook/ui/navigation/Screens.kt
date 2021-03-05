@@ -4,7 +4,7 @@ import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesFragment
 import com.joesemper.justrecipebook.ui.fragments.home.HomeFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
-import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import com.joesemper.justrecipebook.ui.util.constants.SearchType
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class Screens {

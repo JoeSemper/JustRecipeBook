@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D9ECFB"
+    android:background="@color/divider_color"
     android:fitsSystemWindows="false"
     android:layout_alignParentBottom="true"
     tools:context=".ui.fragments.home.HomeFragment">
@@ -19,7 +19,7 @@
             android:id="@+id/toolbar_recipe"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll|snap"
             app:title="Just Recipe Book" />
 
     </com.google.android.material.appbar.AppBarLayout>

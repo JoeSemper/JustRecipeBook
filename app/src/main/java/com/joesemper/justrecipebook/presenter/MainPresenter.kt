@@ -2,7 +2,7 @@ package com.joesemper.justrecipebook.presenter
 
 import com.joesemper.justrecipebook.ui.activities.MainView
 import com.joesemper.justrecipebook.ui.navigation.Screens
-import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import com.joesemper.justrecipebook.ui.util.constants.SearchType
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject

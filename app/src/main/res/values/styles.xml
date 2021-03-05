@@ -4,19 +4,17 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#E6918F</item>
+        <item name="colorAccent">@color/colorPrimaryLight</item>
         <item name="android:textColorPrimary">@color/textOnPrimary</item>
         <item name="android:textColorSecondary">@color/textOnPrimary</item>
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
-    <style name="ActionBatTheme" parent="AppTheme">
-        <!-- Customize your theme here. -->
-
-        <item name="android:textColorPrimary">@color/textOnSecondary</item>
-        <item name="android:textColorSecondary">@color/textOnSecondary</item>
-        <item name="actionMenuTextColor">@color/textOnSecondary</item>
-
+    <style name="SearchViewTheme" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/text_main_color</item>
+        <item name="android:textColorSecondary">@color/text_secondary_color</item>
+        <item name="actionMenuTextColor">@color/text_secondary_color</item>
+        <item name="android:textColor">@color/text_main_color</item>
     </style>
 
 </resources>

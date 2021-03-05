@@ -10,7 +10,7 @@ import com.joesemper.justrecipebook.presenter.MainPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesFragment
 import com.joesemper.justrecipebook.ui.fragments.home.HomeFragment
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
-import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import com.joesemper.justrecipebook.ui.util.constants.SearchType
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter

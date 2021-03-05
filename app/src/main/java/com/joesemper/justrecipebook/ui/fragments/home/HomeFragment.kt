@@ -1,24 +1,24 @@
 package com.joesemper.justrecipebook.ui.fragments.home
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.HomePresenter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
-import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import com.joesemper.justrecipebook.ui.util.constants.SearchType
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_meal.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+
 
 class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
@@ -85,6 +85,9 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 //        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
 //        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         searchView.setIconifiedByDefault(false)
+        search_view_meal.setIconifiedByDefault(false)
+        search_view_meal.queryHint = "meal, ingredient ..."
+        search_view_meal.setOnQueryTextListener(listener)
     }
 
     private fun initActionBar() {

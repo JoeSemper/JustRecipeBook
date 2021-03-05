@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
-    android:background="#F4F3F3"
     android:fitsSystemWindows="false"
+    android:background="@color/divider_color"
     tools:context=".ui.fragments.home.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,8 +19,17 @@
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="enterAlways"
+            app:layout_scrollFlags="scroll|snap"
             app:title="Just Recipe Book" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_meal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/textOnPrimary"
+            android:padding="4dp"
+            app:layout_scrollFlags="enterAlways"
+            android:theme="@style/SearchViewTheme" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

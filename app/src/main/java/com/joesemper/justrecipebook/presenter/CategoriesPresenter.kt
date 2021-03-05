@@ -2,7 +2,6 @@ package com.joesemper.justrecipebook.presenter
 
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.model.Area
-import com.joesemper.justrecipebook.data.model.Areas
 import com.joesemper.justrecipebook.data.model.Category
 import com.joesemper.justrecipebook.presenter.list.IAreaListPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesView
@@ -10,7 +9,7 @@ import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoryItem
 import com.joesemper.justrecipebook.presenter.list.ICategoryListPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.AreaItemView
 import com.joesemper.justrecipebook.ui.navigation.Screens
-import com.joesemper.justrecipebook.ui.utilite.constants.SearchType
+import com.joesemper.justrecipebook.ui.util.constants.SearchType
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter

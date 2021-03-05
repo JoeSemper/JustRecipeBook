@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.list.ICategoryListPresenter
-import com.joesemper.justrecipebook.ui.utilite.image.IImageLoader
+import com.joesemper.justrecipebook.ui.util.image.IImageLoader
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_category.view.*
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.joesemper.justrecipebook.ui.utilite.provider
+package com.joesemper.justrecipebook.ui.util.provider
 
 import android.content.SearchRecentSuggestionsProvider
 
