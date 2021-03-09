@@ -32,6 +32,11 @@ class MainPresenter : MvpPresenter<MainView>() {
         return true
     }
 
+    fun onCartClicked(): Boolean {
+        router.newRootChain(Screens.CartScreen())
+        return true
+    }
+
     fun backClicked() {
         router.exit()
     }

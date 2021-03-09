@@ -12,9 +12,11 @@ import io.reactivex.rxjava3.core.Single
 class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataManager {
 
     override fun getMealById(id: String): Single<Meal> =
-        apiManager.getMealById(id).flatMap { meal ->
-            Single.fromCallable {
-                isMealFavorite(meal)
+        isMealFavorite(id).flatMap { isFavorite ->
+            return@flatMap if (isFavorite) {
+                cache.getMealById(id)
+            } else {
+                apiManager.getMealById(id)
             }
         }
 
@@ -42,15 +44,7 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataM
 
     override fun deleteMealFromFavorite(meal: Meal) = cache.deleteMealFromFavorite(meal)
 
-    private fun isMealFavorite(meal: Meal): Meal {
-        cache.isMealFavorite(meal).subscribe({
-            meal.isFavorite = it
-        }, {
-
-        }
-        )
-        return meal
-    }
+    private fun isMealFavorite(mealId: String) = cache.isMealFavorite(mealId)
 
     override fun getAllCartIngredients() = cache.getAllCartIngredients()
 

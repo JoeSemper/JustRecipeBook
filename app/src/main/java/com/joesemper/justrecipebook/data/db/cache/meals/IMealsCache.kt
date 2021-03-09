@@ -10,5 +10,5 @@ interface IMealsCache {
     fun putMeals(meals: List<Meal>): Completable
     fun putMeal(meal: Meal): Completable
     fun deleteMeal(meal: Meal): Completable
-    fun getMealById(id: String): Single<RoomMeal?>
+    fun getMealById(id: String): Single<Meal>
 }

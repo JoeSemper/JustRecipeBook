@@ -60,6 +60,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 R.id.navigation_home -> presenter.onHomeClicked()
                 R.id.navigation_categories -> presenter.onCategoriesClicked()
                 R.id.navigation_favorites -> presenter.onFavoriteClicked()
+                R.id.navigation_cart -> presenter.onCartClicked()
             }
             return@setOnNavigationItemSelectedListener false
         }

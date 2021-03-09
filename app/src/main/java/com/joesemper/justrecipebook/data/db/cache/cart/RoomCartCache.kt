@@ -15,7 +15,7 @@ class RoomCartCache(val db: Database): ICartCache {
     }
 
     override fun putIngredient(ingredient: Ingredient) = Completable.fromAction {
-        val roomIngredient = RoomCartIngredient(ingredient = ingredient.ingredient)
+        val roomIngredient = RoomCartIngredient(ingredient = ingredient.ingredient, isBought = false)
         db.cartIngredientDao.insert(roomIngredient)
     }
 

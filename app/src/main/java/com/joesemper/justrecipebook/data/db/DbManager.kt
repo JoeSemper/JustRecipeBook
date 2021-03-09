@@ -1,7 +1,5 @@
 package com.joesemper.justrecipebook.data.db
 
-import android.util.Log
-import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.data.db.cache.cart.ICartCache
 import com.joesemper.justrecipebook.data.db.cache.ingredients.IIngredientsCache
 import com.joesemper.justrecipebook.data.db.cache.meals.IMealsCache
@@ -11,27 +9,36 @@ import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import javax.inject.Inject
 
-class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsCache, val cartCache: ICartCache, val logger: ILogger) : IDbManager {
+class DbManager(
+    val mealsCache: IMealsCache,
+    val ingredientsCache: IIngredientsCache,
+    val cartCache: ICartCache,
+    val logger: ILogger
+) : IDbManager {
 
     override fun getSavedMeals() = mealsCache.getMeals().flatMap { meals ->
         mapIngredientsToMeal(meals)
     }.subscribeOn(Schedulers.io())
 
     override fun putMeal(meal: Meal) = Completable.fromAction {
-        put(meal)
+        putMealToDb(meal)
     }.subscribeOn(Schedulers.io())
 
-    override fun deleteMealFromFavorite(meal: Meal)= Completable.fromAction {
-        delete(meal)
+    override fun deleteMealFromFavorite(meal: Meal) = Completable.fromAction {
+        deleteMealFromDb(meal)
     }.subscribeOn(Schedulers.io())
 
-    override fun isMealFavorite(meal: Meal) =
-        mealsCache.getMealById(meal.idMeal).flatMap { roomMeal ->
+    override fun isMealFavorite(mealId: String) =
+        mealsCache.getMealById(mealId).flatMap { roomMeal ->
             Single.fromCallable {
                 roomMeal != null
             }
+        }.subscribeOn(Schedulers.io())
+
+    override fun getMealById(mealId: String): Single<Meal> =
+        mealsCache.getMealById(mealId).flatMap { meal ->
+            mapIngredientsToMeal(listOf(meal)).map { it[0] }
         }.subscribeOn(Schedulers.io())
 
     private fun mapIngredientsToMeal(meals: List<Meal>) = Single.fromCallable {
@@ -39,7 +46,7 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
             getMealIngredients(meal).subscribe({ ingredients ->
                 meal.ingredients = ingredients as MutableList<Ingredient>?
             }, {
-                Log.v("mytag", it.message.toString())
+                logger.log(it)
             })
             meal
         }
@@ -47,8 +54,8 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
 
     private fun getMealIngredients(meal: Meal) = ingredientsCache.getIngredients(meal)
 
-    private fun put(meal: Meal) {
-        mealsCache.putMeal(meal).subscribe({},{
+    private fun putMealToDb(meal: Meal) {
+        mealsCache.putMeal(meal).subscribe({}, {
             logger.log(it)
         })
         ingredientsCache.putIngredients(meal, meal.ingredients!!.toList()).subscribe({}, {
@@ -56,7 +63,7 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
         })
     }
 
-    private fun delete(meal: Meal) {
+    private fun deleteMealFromDb(meal: Meal) {
         mealsCache.deleteMeal(meal).subscribe({}, {
             logger.log(it)
         })
@@ -65,11 +72,19 @@ class DbManager(val mealsCache: IMealsCache, val ingredientsCache: IIngredientsC
         })
     }
 
-    override fun getAllCartIngredients() = cartCache.getAllIngredients()
+    override fun getAllCartIngredients() = cartCache
+        .getAllIngredients()
+        .subscribeOn(Schedulers.io())
 
-    override fun putIngredient(ingredient: Ingredient) = cartCache.putIngredient(ingredient)
+    override fun putIngredient(ingredient: Ingredient) = cartCache
+        .putIngredient(ingredient)
+        .subscribeOn(Schedulers.io())
 
-    override fun updateIngredient(ingredient: Ingredient) = cartCache.updateIngredient(ingredient)
+    override fun updateIngredient(ingredient: Ingredient) = cartCache
+        .updateIngredient(ingredient)
+        .subscribeOn(Schedulers.io())
 
-    override fun deleteIngredient(ingredient: Ingredient) = cartCache.deleteIngredient(ingredient)
+    override fun deleteIngredient(ingredient: Ingredient) = cartCache
+        .deleteIngredient(ingredient)
+        .subscribeOn(Schedulers.io())
 }

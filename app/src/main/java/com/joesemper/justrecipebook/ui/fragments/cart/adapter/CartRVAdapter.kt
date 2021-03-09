@@ -11,6 +11,7 @@ import com.joesemper.justrecipebook.ui.util.constants.Constants.Companion.EXTENS
 import com.joesemper.justrecipebook.ui.util.constants.Constants.Companion.INGREDIENT_IMG_BASE_URL
 import com.joesemper.justrecipebook.ui.util.image.IImageLoader
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_cart.view.*
 import kotlinx.android.synthetic.main.item_cart.view.tv_cart_ingredient
 import kotlinx.android.synthetic.main.item_ingredient.view.*
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class CartRVAdapter(val presenter: ICartListPresenter) :
         }
 
         override fun setImage(imgName: String) = with(containerView) {
-            imageLoader.loadInto(INGREDIENT_IMG_BASE_URL + imgName + EXTENSION, iv_ingredient)
+            imageLoader.loadInto(INGREDIENT_IMG_BASE_URL + imgName + EXTENSION, iv_cart_ingredient)
         }
     }
 

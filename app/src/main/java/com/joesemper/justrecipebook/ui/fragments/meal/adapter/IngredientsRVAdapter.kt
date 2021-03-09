@@ -27,6 +27,12 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
 
         override var pos = -1
 
+        override var addToCartClickListener: View.OnClickListener? = null
+
+        fun setOnClickListener(listener: View.OnClickListener) {
+            containerView.button_add_to_cart.setOnClickListener(listener)
+        }
+
         override fun setIngredient(name: String) = with(containerView) {
             tv_cart_ingredient.text = name
         }
@@ -50,6 +56,11 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         holder.containerView.setOnClickListener { presenter.itemClickListener?.invoke(holder) }
+        holder.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                presenter.addToCartClickListener?.invoke(holder)
+            }
+        })
         presenter.bindView(holder)
     }
 }

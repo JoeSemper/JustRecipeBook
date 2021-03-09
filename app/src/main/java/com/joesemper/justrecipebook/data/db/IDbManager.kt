@@ -8,7 +8,8 @@ import io.reactivex.rxjava3.core.Single
 interface IDbManager {
     fun getSavedMeals(): Single<List<Meal>>
     fun putMeal(meal: Meal): Completable
-    fun isMealFavorite(meal: Meal): Single<Boolean>
+    fun isMealFavorite(mealId: String): Single<Boolean>
+    fun getMealById(mealId: String): Single<Meal>
     fun deleteMealFromFavorite(meal: Meal): Completable
     fun getAllCartIngredients(): Single<List<Ingredient>>
     fun putIngredient(ingredient: Ingredient): Completable

@@ -1,11 +1,13 @@
 package com.joesemper.justrecipebook.presenter
 
+import android.widget.Button
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
+import com.joesemper.justrecipebook.ui.interfaces.IItemView
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -34,6 +36,8 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
         override var itemClickListener: ((IngredientItemView) -> Unit)? = null
 
+        override var addToCartClickListener: ((IngredientItemView) -> Unit)? = null
+
         override fun bindView(view: IngredientItemView) {
             val ingredient = ingredients[view.pos]
 
@@ -52,6 +56,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadFullMeal()
+        setOnClickListeners()
     }
 
     private fun loadFullMeal() {
@@ -106,6 +111,18 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     fun onOptionsMenuCreated() {
         viewState.setIsFavorite(currentMeal.isFavorite)
+    }
+
+    private fun setOnClickListeners() {
+        ingredientsListPresenter.addToCartClickListener = { ingredient ->
+            dataManager.putIngredient(ingredientsListPresenter.ingredients[ingredient.pos])
+                .observeOn(mainThreadScheduler)
+                .subscribe({
+                    viewState.showResult("Added to cart")
+                }, {
+                    logger.log(it)
+                })
+        }
     }
 
     private fun updateIngredients() {

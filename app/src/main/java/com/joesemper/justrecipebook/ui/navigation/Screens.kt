@@ -1,6 +1,7 @@
 package com.joesemper.justrecipebook.ui.navigation
 
 import com.joesemper.justrecipebook.data.model.Meal
+import com.joesemper.justrecipebook.ui.fragments.cart.CartFragment
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesFragment
 import com.joesemper.justrecipebook.ui.fragments.home.HomeFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
@@ -18,6 +19,10 @@ class Screens {
 
     class CategoriesScreen() : SupportAppScreen() {
         override fun getFragment() = CategoriesFragment.newInstance()
+    }
+
+    class CartScreen(): SupportAppScreen() {
+        override fun getFragment() = CartFragment.newInstance()
     }
 
 }
