@@ -53,18 +53,42 @@ class CartPresenter : MvpPresenter<CartView>() {
         override fun getCount(): Int = cartIngredients.size
     }
 
-    fun onItemSwiped(pos: Int){
-        val ingredient = cartListPresenter.cartIngredients[pos]
-        viewState.vibrate()
-        dataManager.deleteIngredient(ingredient).subscribe()
-        loadCartIngredients()
-    }
-
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         loadCartIngredients()
         setOnClickListeners()
+    }
+
+    fun onItemSwiped(pos: Int){
+        val ingredient = cartListPresenter.cartIngredients[pos]
+        viewState.vibrate()
+        dataManager.deleteIngredient(ingredient).subscribe({
+            loadCartIngredients()
+        }, {
+            logger.log(it)
+        })
+    }
+
+    fun onClearCartClicked(): Boolean {
+        viewState.createDeleteDialog()
+        return true
+    }
+
+    fun clearAllSelected() {
+        dataManager.deleteAllIngredients().subscribe( {
+            loadCartIngredients()
+        }, {
+            logger.log(it)
+        })
+    }
+
+    fun clearBoughtSelected() {
+        dataManager.deleteBoughtIngredients().subscribe({
+            loadCartIngredients()
+        }, {
+            logger.log(it)
+        })
     }
 
     private fun loadCartIngredients() {
@@ -91,8 +115,8 @@ class CartPresenter : MvpPresenter<CartView>() {
 
     private fun onCheckBoxClicked(cartItem: CartItemView) {
         val ingredient = cartListPresenter.cartIngredients[cartItem.pos]
-        updateIngredientInDb(ingredient)
         switchItemBoughtStatus(ingredient)
+        updateIngredientInDb(ingredient)
         displayItemBoughtStatus(cartItem, ingredient.isBought)
     }
 

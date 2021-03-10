@@ -7,6 +7,7 @@ import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -83,4 +84,13 @@ class DbManager(
     override fun deleteIngredient(ingredient: Ingredient) = cartCache
         .deleteIngredient(ingredient)
         .subscribeOn(Schedulers.io())
+
+    override fun deleteAllCartIngredients() = cartCache
+        .deleteAllIngredients()
+        .subscribeOn(Schedulers.io())
+
+    override fun deleteBoughtIngredients() = cartCache
+        .deleteBoughtIngredients()
+        .subscribeOn(Schedulers.io())
+
 }

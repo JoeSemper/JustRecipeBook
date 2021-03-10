@@ -11,5 +11,6 @@ interface CartView: MvpView {
     fun updateItem(pos: Int)
     fun showContent()
     fun showResult(text: String)
+    fun createDeleteDialog()
     fun vibrate()
 }

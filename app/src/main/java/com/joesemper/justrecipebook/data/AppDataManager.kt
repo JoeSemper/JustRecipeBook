@@ -20,31 +20,25 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataM
             }
         }
 
-    override fun getMealByCategory(category: String): Single<List<Meal>> =
-        apiManager.getMealsByCategory(category)
+    private fun isMealFavorite(mealId: String) = cache.isMealFavorite(mealId)
 
-    override fun getMealsByArea(area: String): Single<List<Meal>> =
-        apiManager.getMealsByArea(area)
+    override fun getMealByCategory(category: String) = apiManager.getMealsByCategory(category)
 
-    override fun getAllCategories(): Single<List<Category>> =
-        apiManager.getAllCategories()
+    override fun getMealsByArea(area: String) = apiManager.getMealsByArea(area)
 
-    override fun getAllAreas(): Single<List<Area>> =
-        apiManager.getAllAreas()
+    override fun getAllCategories() = apiManager.getAllCategories()
 
-    override fun getSingleRandomMeal(): Single<Meal> =
-        apiManager.getSingleRandomMeal()
+    override fun getAllAreas() = apiManager.getAllAreas()
 
-    override fun searchMealByName(query: String?): Single<List<Meal>> =
-        apiManager.searchMealsByName(query)
+    override fun getSingleRandomMeal() = apiManager.getSingleRandomMeal()
+
+    override fun searchMealByName(query: String?) = apiManager.searchMealsByName(query)
 
     override fun putMealToFavorite(meal: Meal) = cache.putMeal(meal)
 
     override fun getFavoriteMeals(): Single<List<Meal>> = cache.getSavedMeals()
 
     override fun deleteMealFromFavorite(meal: Meal) = cache.deleteMealFromFavorite(meal)
-
-    private fun isMealFavorite(mealId: String) = cache.isMealFavorite(mealId)
 
     override fun getAllCartIngredients() = cache.getAllCartIngredients()
 
@@ -53,4 +47,8 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataM
     override fun updateIngredient(ingredient: Ingredient) = cache.updateIngredient(ingredient)
 
     override fun deleteIngredient(ingredient: Ingredient) = cache.deleteIngredient(ingredient)
+
+    override fun deleteAllIngredients() = cache.deleteAllCartIngredients()
+
+    override fun deleteBoughtIngredients() = cache.deleteBoughtIngredients()
 }

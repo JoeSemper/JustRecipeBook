@@ -30,4 +30,12 @@ class RoomCartCache(val db: Database): ICartCache {
         val roomIngredient = RoomCartIngredient(ingredient = ingredient.ingredient)
         db.cartIngredientDao.delete(roomIngredient)
     }
+
+    override fun deleteAllIngredients() = Completable.fromAction {
+        db.cartIngredientDao.deleteAll()
+    }
+
+    override fun deleteBoughtIngredients() = Completable.fromAction {
+        db.cartIngredientDao.deleteBought()
+    }
 }

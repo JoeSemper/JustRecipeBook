@@ -1,14 +1,15 @@
 package com.joesemper.justrecipebook.ui.fragments.cart
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +20,11 @@ import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.util.view.callback.SwipeCallback
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_meal.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class CartFragment: MvpAppCompatFragment(), CartView, BackButtonListener {
+class CartFragment : MvpAppCompatFragment(), CartView, BackButtonListener {
 
     companion object {
         fun newInstance() = CartFragment()
@@ -40,10 +42,55 @@ class CartFragment: MvpAppCompatFragment(), CartView, BackButtonListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = View.inflate(context, R.layout.fragment_cart, null)
+    ): View? {
+        setHasOptionsMenu(true)
+        return View.inflate(context, R.layout.fragment_cart, null)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_cart, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_remove -> presenter.onClearCartClicked()
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun init() {
         initRV()
+
+        with(activity as AppCompatActivity) {
+            setSupportActionBar(toolbar_cart)
+        }
+    }
+
+    override fun createDeleteDialog() {
+        val dialogBuilder = AlertDialog.Builder(requireActivity())
+        val items = arrayOf("Clear all", "Clear bought")
+        var selectedItem = 0
+
+        with(dialogBuilder) {
+            setTitle("Clear options")
+            setSingleChoiceItems(
+                items, 0
+            ) { _, which ->
+                when (which) {
+                    0 -> selectedItem = 0
+                    1 -> selectedItem = 1
+                }
+            }
+            setPositiveButton("Ok") { _, _ ->
+                when (selectedItem) {
+                    0 -> presenter.clearAllSelected()
+                    1 -> presenter.clearBoughtSelected()
+                }
+            }
+        }
+        val dialog = dialogBuilder.create()
+        dialog.show()
     }
 
     private fun initRV() {

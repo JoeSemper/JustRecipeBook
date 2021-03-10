@@ -12,7 +12,9 @@ interface IDbManager {
     fun getMealById(mealId: String): Single<Meal>
     fun deleteMealFromFavorite(meal: Meal): Completable
     fun getAllCartIngredients(): Single<List<Ingredient>>
+    fun deleteAllCartIngredients(): Completable
     fun putIngredient(ingredient: Ingredient): Completable
     fun updateIngredient(ingredient: Ingredient): Completable
     fun deleteIngredient(ingredient: Ingredient): Completable
+    fun deleteBoughtIngredients(): Completable
 }

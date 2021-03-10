@@ -9,4 +9,6 @@ interface ICartCache {
     fun putIngredient(ingredient: Ingredient): Completable
     fun updateIngredient(ingredient: Ingredient): Completable
     fun deleteIngredient(ingredient: Ingredient): Completable
+    fun deleteAllIngredients(): Completable
+    fun deleteBoughtIngredients(): Completable
 }

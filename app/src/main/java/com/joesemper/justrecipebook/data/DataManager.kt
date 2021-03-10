@@ -22,5 +22,7 @@ interface DataManager {
     fun getAllCartIngredients(): Single<List<Ingredient>>
     fun putIngredient(ingredient: Ingredient): Completable
     fun updateIngredient(ingredient: Ingredient): Completable
+    fun deleteAllIngredients(): Completable
+    fun deleteBoughtIngredients(): Completable
     fun deleteIngredient(ingredient: Ingredient): Completable
 }

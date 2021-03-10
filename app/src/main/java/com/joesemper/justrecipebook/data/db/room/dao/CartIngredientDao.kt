@@ -27,5 +27,10 @@ interface CartIngredientDao {
     @Query("SELECT * FROM RoomCartIngredient")
     fun getAll() : List<RoomCartIngredient>
 
+    @Query("DELETE FROM RoomCartIngredient")
+    fun deleteAll()
+
+    @Query("DELETE FROM RoomCartIngredient WHERE isBought = 1")
+    fun deleteBought()
 
 }
