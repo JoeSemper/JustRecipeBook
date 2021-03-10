@@ -11,7 +11,7 @@ class RoomIngredientsCache(val db: Database): IIngredientsCache {
 
     override fun getIngredients(meal: Meal) = Single.fromCallable {
         val roomMeal = db.mealDao.findById(meal.idMeal)
-        return@fromCallable db.ingredientDao.findForMeal(roomMeal.idMeal).map {
+        return@fromCallable db.ingredientDao.findForMeal(roomMeal!!.idMeal).map {
             Ingredient(it.ingredient, it.measure)
         }
     }
@@ -19,7 +19,7 @@ class RoomIngredientsCache(val db: Database): IIngredientsCache {
     override fun putIngredients(meal: Meal, ingredients: List<Ingredient>) = Completable.fromAction {
         val roomMeal = db.mealDao.findById(meal.idMeal)
         val roomIngredients = ingredients.map {
-            RoomIngredient(it.ingredient, it.measure, roomMeal.idMeal)
+            RoomIngredient(it.ingredient, it.measure, roomMeal!!.idMeal)
         }
         db.ingredientDao.insert(roomIngredients)
     }

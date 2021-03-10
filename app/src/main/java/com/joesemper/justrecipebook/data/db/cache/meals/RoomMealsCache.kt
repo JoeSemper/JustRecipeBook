@@ -5,6 +5,8 @@ import com.joesemper.justrecipebook.data.db.room.RoomMeal
 import com.joesemper.justrecipebook.data.model.Meal
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import java.lang.IllegalArgumentException
+import java.lang.NullPointerException
 
 class RoomMealsCache(val db: Database) : IMealsCache {
 
@@ -15,15 +17,19 @@ class RoomMealsCache(val db: Database) : IMealsCache {
     }
 
     override fun putMeals(meals: List<Meal>) = Completable.fromAction {
-        val roomMeal = meals.map { meal ->
+        val roomMeals = meals.map { meal ->
             getRoomMealByMeal(meal)
         }
-        db.mealDao.insert(roomMeal)
+        db.mealDao.insert(roomMeals)
     }
 
     override fun getMealById(id: String) = Single.fromCallable {
-        val roomMeal = db.mealDao.findById(id)
-        getMealByRoomMeal(roomMeal)
+        val meal = db.mealDao.findById(id)
+        getMealByRoomMeal(meal!!)
+    }
+
+    override fun isMealFavorite(id: String) = Single.fromCallable {
+        db.mealDao.findById(id) != null
     }
 
     override fun putMeal(meal: Meal) = Completable.fromAction {

@@ -10,12 +10,12 @@ class RoomCartCache(val db: Database): ICartCache {
 
     override fun getAllIngredients() = Single.fromCallable {
         db.cartIngredientDao.getAll().map {
-            Ingredient(ingredient = it.ingredient)
+            Ingredient(ingredient = it.ingredient, isBought = it.isBought)
         }
     }
 
     override fun putIngredient(ingredient: Ingredient) = Completable.fromAction {
-        val roomIngredient = RoomCartIngredient(ingredient = ingredient.ingredient, isBought = false)
+        val roomIngredient = RoomCartIngredient(ingredient = ingredient.ingredient)
         db.cartIngredientDao.insert(roomIngredient)
     }
 

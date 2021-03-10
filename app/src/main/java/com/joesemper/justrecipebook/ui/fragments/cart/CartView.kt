@@ -8,5 +8,8 @@ import moxy.viewstate.strategy.StateStrategyType
 interface CartView: MvpView {
     fun init()
     fun updateList()
+    fun updateItem(pos: Int)
     fun showContent()
+    fun showResult(text: String)
+    fun vibrate()
 }

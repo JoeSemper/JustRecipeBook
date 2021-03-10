@@ -27,7 +27,7 @@ interface MealDao {
     fun getAll() : List<RoomMeal>
 
     @Query("SELECT * FROM RoomMeal WHERE idMeal = :id LIMIT 1")
-    fun findById(id : String) : RoomMeal
+    fun findById(id : String) : RoomMeal?
 
     @Query("DELETE FROM RoomMeal WHERE idMeal = :id")
     fun deleteById(id : String)

@@ -30,11 +30,7 @@ class DbManager(
     }.subscribeOn(Schedulers.io())
 
     override fun isMealFavorite(mealId: String) =
-        mealsCache.getMealById(mealId).flatMap { roomMeal ->
-            Single.fromCallable {
-                roomMeal != null
-            }
-        }.subscribeOn(Schedulers.io())
+        mealsCache.isMealFavorite(mealId).subscribeOn(Schedulers.io())
 
     override fun getMealById(mealId: String): Single<Meal> =
         mealsCache.getMealById(mealId).flatMap { meal ->

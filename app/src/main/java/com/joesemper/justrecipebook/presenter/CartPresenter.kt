@@ -5,6 +5,7 @@ import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.presenter.list.ICartListPresenter
 import com.joesemper.justrecipebook.ui.fragments.cart.CartView
 import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartItemView
+import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -32,6 +33,7 @@ class CartPresenter : MvpPresenter<CartView>() {
 
         override var itemClickListener: ((CartItemView) -> Unit)? = null
 
+        override var checkBoxClickListener: ((CartItemView) -> Unit)? = null
 
         override fun bindView(view: CartItemView) {
             val ingredient = cartIngredients[view.pos]
@@ -40,15 +42,29 @@ class CartPresenter : MvpPresenter<CartView>() {
                 view.setIngredient(it)
                 view.setImage(it)
             }
+
+            if (ingredient.isBought) {
+                view.setIngredientIsBought()
+            } else {
+                view.setIngredientIsNotBought()
+            }
         }
 
         override fun getCount(): Int = cartIngredients.size
+    }
+
+    fun onItemSwiped(pos: Int){
+        val ingredient = cartListPresenter.cartIngredients[pos]
+        viewState.vibrate()
+        dataManager.deleteIngredient(ingredient).subscribe()
+        loadCartIngredients()
     }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
         loadCartIngredients()
+        setOnClickListeners()
     }
 
     private fun loadCartIngredients() {
@@ -65,6 +81,39 @@ class CartPresenter : MvpPresenter<CartView>() {
         cartListPresenter.cartIngredients.clear()
         cartListPresenter.cartIngredients.addAll(ingredients)
         viewState.updateList()
+    }
+
+    private fun setOnClickListeners() {
+        cartListPresenter.checkBoxClickListener = { cartItem ->
+            onCheckBoxClicked(cartItem)
+        }
+    }
+
+    private fun onCheckBoxClicked(cartItem: CartItemView) {
+        val ingredient = cartListPresenter.cartIngredients[cartItem.pos]
+        updateIngredientInDb(ingredient)
+        switchItemBoughtStatus(ingredient)
+        displayItemBoughtStatus(cartItem, ingredient.isBought)
+    }
+
+    private fun switchItemBoughtStatus(ingredient: Ingredient) {
+        with(ingredient) {
+            isBought = !isBought
+        }
+    }
+
+    private fun displayItemBoughtStatus(item: CartItemView, isBought: Boolean) {
+        if (isBought) {
+            item.setIngredientIsBought()
+        } else {
+            item.setIngredientIsNotBought()
+        }
+    }
+
+    private fun updateIngredientInDb(ingredient: Ingredient) {
+        dataManager.updateIngredient(ingredient)
+            .observeOn(mainThreadScheduler)
+            .subscribe()
     }
 
     fun backPressed(): Boolean {
