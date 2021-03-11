@@ -9,6 +9,5 @@ interface IngredientItemView : IItemView {
     fun setMeasure(measure: String)
     fun loadImage(imageName: String)
     val addToCartClickListener: View.OnClickListener?
-    fun setIngredientIsInCart(isInCart: Boolean)
-    fun isInCart(): Boolean
+    var isInCart: Boolean
 }

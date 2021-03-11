@@ -1,19 +1,16 @@
 package com.joesemper.justrecipebook.presenter
 
-import android.widget.Button
 import com.joesemper.justrecipebook.data.DataManager
 import com.joesemper.justrecipebook.data.model.Ingredient
 import com.joesemper.justrecipebook.data.model.Meal
-import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
+import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
-import com.joesemper.justrecipebook.ui.interfaces.IItemView
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
-import kotlin.system.measureNanoTime
 
 class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
@@ -39,22 +36,19 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         override var addToCartClickListener: ((IngredientItemView) -> Unit)? = null
 
         override fun bindView(view: IngredientItemView) {
-            val ingredient = ingredients[view.pos]
-
-            ingredient.ingredient.let {
-                view.setIngredient(it)
-                view.loadImage(it)
-            }
-
-            ingredient.measure?.let {
-                view.setMeasure(it)
-            }
-
-            ingredient.inCart.let {
-                view.setIngredientIsInCart(it)
+            with(ingredients[view.pos]) {
+                ingredient.let {
+                    view.setIngredient(it)
+                    view.loadImage(it)
+                }
+                measure?.let {
+                    view.setMeasure(it)
+                }
+                inCart.let {
+                    view.isInCart = it
+                }
             }
         }
-
 
         override fun getCount(): Int = ingredients.size
     }
@@ -62,7 +56,6 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadFullMeal()
-        setOnClickListeners()
     }
 
     private fun loadFullMeal() {
@@ -79,6 +72,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         currentMeal = meal
         viewState.init()
         displayMealData(meal)
+        setOnClickListeners()
     }
 
     private fun displayMealData(meal: Meal) {
@@ -91,28 +85,36 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     fun onIngredientsReady() {
         viewState.initIngredients()
         displayIngredientList()
-        viewState.showContent()
     }
 
     private fun displayIngredientList() {
-        loadIngredientsCartList()
+        loadCartIngredientsList()
+        viewState.showContent()
     }
 
-    private fun loadIngredientsCartList() {
+    private fun loadCartIngredientsList() {
         dataManager.getAllCartIngredients()
             .observeOn(mainThreadScheduler)
             .subscribe({ cartIngredients ->
-                currentMeal.ingredients?.map { mealIngredient ->
-                    cartIngredients.forEach { cartIngredient ->
-                        if (cartIngredient.ingredient == mealIngredient.ingredient) {
-                            mealIngredient.inCart = true
-                        }
-                    }
-                    updateIngredients()
-                }
+                onCartIngredientsLoaded(cartIngredients)
             }, {
                 logger.log(it)
             })
+    }
+
+    private fun onCartIngredientsLoaded(cartIngredients: List<Ingredient>) {
+        mapIngredientsToCurrentMeal(cartIngredients)
+        updateIngredientsList()
+    }
+
+    private fun mapIngredientsToCurrentMeal(cartIngredients: List<Ingredient>) {
+        currentMeal.ingredients?.map { mealIngredient ->
+            cartIngredients.forEach { cartIngredient ->
+                if (cartIngredient.ingredient == mealIngredient.ingredient) {
+                    mealIngredient.inCart = true
+                }
+            }
+        }
     }
 
     fun onInstructionReady() {
@@ -143,7 +145,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     }
 
     private fun onAddToCartClicked(item: IngredientItemView) {
-        if (!item.isInCart()) {
+        if (!item.isInCart) {
             removeIngredientFromCart(item)
         } else {
             addIngredientToCart(item)
@@ -155,7 +157,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         dataManager.putIngredient(ingredient)
             .observeOn(mainThreadScheduler)
             .subscribe({
-                item.setIngredientIsInCart(true)
+                item.isInCart = true
                 viewState.showResult("${ingredient.ingredient} added to cart")
             }, {
                 logger.log(it)
@@ -167,14 +169,14 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         dataManager.deleteIngredient(ingredient)
             .observeOn(mainThreadScheduler)
             .subscribe({
-                item.setIngredientIsInCart(false)
+                item.isInCart = false
                 viewState.showResult("${ingredient.ingredient} removed from cart")
             }, {
                 logger.log(it)
             })
     }
 
-    private fun updateIngredients() {
+    private fun updateIngredientsList() {
         ingredientsListPresenter.ingredients.clear()
         currentMeal.ingredients?.let { ingredientsListPresenter.ingredients.addAll(it) }
         viewState.updateIngredientsList()
@@ -187,9 +189,9 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
             .observeOn(mainThreadScheduler)
             .subscribe({
                 if (isFavorite) {
-                    viewState.showResult("Removed from favorite")
+                    viewState.showResult("${currentMeal.strMeal} removed from favorite")
                 } else {
-                    viewState.showResult("Added to favorite")
+                    viewState.showResult("${currentMeal.strMeal} added to favorite")
                 }
             }, {
                 logger.log(it)

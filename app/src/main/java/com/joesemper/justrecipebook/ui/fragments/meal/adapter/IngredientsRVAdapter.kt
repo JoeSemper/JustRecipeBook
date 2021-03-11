@@ -17,7 +17,6 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_ingredient.view.*
 import javax.inject.Inject
 
-
 class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
     RecyclerView.Adapter<IngredientsRVAdapter.ViewHolder>() {
 
@@ -25,16 +24,14 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
     lateinit var imageLoader: IImageLoader<ImageView>
 
     inner class ViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
-        LayoutContainer, IngredientItemView {
+        RecyclerView.ViewHolder(containerView), LayoutContainer, IngredientItemView {
 
         override var pos = -1
 
         override var addToCartClickListener: View.OnClickListener? = null
-
-        fun setOnClickListener(listener: View.OnClickListener) {
-            containerView.checkBox_add_to_cart.setOnClickListener(listener)
-        }
+            set(value) {
+                containerView.checkBox_add_to_cart.setOnClickListener(value)
+            }
 
         override fun setIngredient(name: String) = with(containerView) {
             tv_cart_ingredient.text = name
@@ -48,26 +45,30 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
             imageLoader.loadInto(INGREDIENT_IMG_BASE_URL + imageName + EXTENSION, iv_ingredient)
         }
 
-        override fun setIngredientIsInCart(isInCart: Boolean) = with(containerView) {
-            checkBox_add_to_cart.isChecked = isInCart
-        }
-
-        override fun isInCart(): Boolean = with(containerView){
-            return checkBox_add_to_cart.isChecked
-        }
+        override var isInCart: Boolean
+            get() = containerView.checkBox_add_to_cart.isChecked
+            set(value) {
+                containerView.checkBox_add_to_cart.isChecked = value
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_ingredient, parent, false)
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.item_ingredient, parent, false)
         )
 
     override fun getItemCount() = presenter.getCount()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.pos = position
-        holder.containerView.setOnClickListener { presenter.itemClickListener?.invoke(holder) }
-        holder.setOnClickListener { presenter.addToCartClickListener?.invoke(holder) }
-        presenter.bindView(holder)
+        with(holder) {
+            pos = position
+            containerView.setOnClickListener { presenter.itemClickListener?.invoke(this) }
+            addToCartClickListener =
+                View.OnClickListener { presenter.addToCartClickListener?.invoke(this) }
+            presenter.bindView(this)
+        }
     }
+
 }
