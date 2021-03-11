@@ -16,4 +16,5 @@
     <color name="divider_color">#1F000000</color>
     <color name="text_support_color">#42000000</color>
     <color name="foreground_tint_cart">#0D000000</color>
+    <color name="foreground_tint_button">#00FFFFFF</color>
 </resources>

@@ -45,10 +45,16 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
                 view.setIngredient(it)
                 view.loadImage(it)
             }
+
             ingredient.measure?.let {
                 view.setMeasure(it)
             }
+
+            ingredient.inCart.let {
+                view.setIngredientIsInCart(it)
+            }
         }
+
 
         override fun getCount(): Int = ingredients.size
     }
@@ -84,8 +90,29 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     fun onIngredientsReady() {
         viewState.initIngredients()
-        updateIngredients()
+        displayIngredientList()
         viewState.showContent()
+    }
+
+    private fun displayIngredientList() {
+        loadIngredientsCartList()
+    }
+
+    private fun loadIngredientsCartList() {
+        dataManager.getAllCartIngredients()
+            .observeOn(mainThreadScheduler)
+            .subscribe({ cartIngredients ->
+                currentMeal.ingredients?.map { mealIngredient ->
+                    cartIngredients.forEach { cartIngredient ->
+                        if (cartIngredient.ingredient == mealIngredient.ingredient) {
+                            mealIngredient.inCart = true
+                        }
+                    }
+                    updateIngredients()
+                }
+            }, {
+                logger.log(it)
+            })
     }
 
     fun onInstructionReady() {
@@ -100,10 +127,6 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         return true
     }
 
-    fun onAddToCartClicked(): Boolean {
-        return true
-    }
-
     fun onWatchVideoClicked(): Boolean {
         viewState.playVideo(currentMeal.strYoutubeId)
         return true
@@ -114,15 +137,41 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     }
 
     private fun setOnClickListeners() {
-        ingredientsListPresenter.addToCartClickListener = { ingredient ->
-            dataManager.putIngredient(ingredientsListPresenter.ingredients[ingredient.pos])
-                .observeOn(mainThreadScheduler)
-                .subscribe({
-                    viewState.showResult("Added to cart")
-                }, {
-                    logger.log(it)
-                })
+        ingredientsListPresenter.addToCartClickListener = { item ->
+            onAddToCartClicked(item)
         }
+    }
+
+    private fun onAddToCartClicked(item: IngredientItemView) {
+        if (!item.isInCart()) {
+            removeIngredientFromCart(item)
+        } else {
+            addIngredientToCart(item)
+        }
+    }
+
+    private fun addIngredientToCart(item: IngredientItemView) {
+        val ingredient = ingredientsListPresenter.ingredients[item.pos]
+        dataManager.putIngredient(ingredient)
+            .observeOn(mainThreadScheduler)
+            .subscribe({
+                item.setIngredientIsInCart(true)
+                viewState.showResult("${ingredient.ingredient} added to cart")
+            }, {
+                logger.log(it)
+            })
+    }
+
+    private fun removeIngredientFromCart(item: IngredientItemView) {
+        val ingredient = ingredientsListPresenter.ingredients[item.pos]
+        dataManager.deleteIngredient(ingredient)
+            .observeOn(mainThreadScheduler)
+            .subscribe({
+                item.setIngredientIsInCart(false)
+                viewState.showResult("${ingredient.ingredient} removed from cart")
+            }, {
+                logger.log(it)
+            })
     }
 
     private fun updateIngredients() {

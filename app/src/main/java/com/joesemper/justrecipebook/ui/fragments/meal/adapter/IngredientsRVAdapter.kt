@@ -3,7 +3,10 @@ package com.joesemper.justrecipebook.ui.fragments.meal.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
@@ -30,7 +33,7 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
         override var addToCartClickListener: View.OnClickListener? = null
 
         fun setOnClickListener(listener: View.OnClickListener) {
-            containerView.button_add_to_cart.setOnClickListener(listener)
+            containerView.checkBox_add_to_cart.setOnClickListener(listener)
         }
 
         override fun setIngredient(name: String) = with(containerView) {
@@ -44,6 +47,14 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
         override fun loadImage(imageName: String) = with(containerView) {
             imageLoader.loadInto(INGREDIENT_IMG_BASE_URL + imageName + EXTENSION, iv_ingredient)
         }
+
+        override fun setIngredientIsInCart(isInCart: Boolean) = with(containerView) {
+            checkBox_add_to_cart.isChecked = isInCart
+        }
+
+        override fun isInCart(): Boolean = with(containerView){
+            return checkBox_add_to_cart.isChecked
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -56,11 +67,7 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.pos = position
         holder.containerView.setOnClickListener { presenter.itemClickListener?.invoke(holder) }
-        holder.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                presenter.addToCartClickListener?.invoke(holder)
-            }
-        })
+        holder.setOnClickListener { presenter.addToCartClickListener?.invoke(holder) }
         presenter.bindView(holder)
     }
 }

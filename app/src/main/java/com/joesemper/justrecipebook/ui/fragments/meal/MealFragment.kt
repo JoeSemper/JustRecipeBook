@@ -76,7 +76,6 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_add_to_favorite -> presenter.onAddToFavoriteClicked()
-            R.id.item_add_to_cart -> presenter.onAddToCartClicked()
             R.id.item_play_video -> presenter.onWatchVideoClicked()
             else -> super.onOptionsItemSelected(item)
         }
