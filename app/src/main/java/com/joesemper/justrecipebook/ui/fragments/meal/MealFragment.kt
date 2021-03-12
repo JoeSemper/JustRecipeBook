@@ -77,8 +77,17 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
         return when (item.itemId) {
             R.id.item_add_to_favorite -> presenter.onAddToFavoriteClicked()
             R.id.item_play_video -> presenter.onWatchVideoClicked()
+            R.id.item_share -> presenter.onShareClicked()
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun shareRecipe(url: String, title: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_SUBJECT, title)
+        intent.putExtra(Intent.EXTRA_TEXT, url)
+        intent.type = "text/plain"
+        startActivity(Intent.createChooser(intent, "Share to"))
     }
 
     override fun initActionBar(title: String, subtitle: String) {

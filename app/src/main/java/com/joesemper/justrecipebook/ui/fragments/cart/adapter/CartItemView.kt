@@ -1,5 +1,6 @@
 package com.joesemper.justrecipebook.ui.fragments.cart.adapter
 
+import android.view.View
 import com.joesemper.justrecipebook.ui.interfaces.IItemView
 
 interface CartItemView: IItemView {

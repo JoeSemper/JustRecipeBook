@@ -6,6 +6,7 @@ import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
+import com.joesemper.justrecipebook.ui.util.constants.Constants.Companion.MEAL_BASE_URL
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -136,6 +137,11 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     fun onOptionsMenuCreated() {
         viewState.setIsFavorite(currentMeal.isFavorite)
+    }
+
+    fun onShareClicked(): Boolean {
+        viewState.shareRecipe("$MEAL_BASE_URL${currentMeal.idMeal}", currentMeal.strMeal)
+        return true
     }
 
     private fun setOnClickListeners() {

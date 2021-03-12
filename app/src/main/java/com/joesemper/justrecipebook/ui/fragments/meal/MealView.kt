@@ -17,4 +17,5 @@ interface MealView: MvpView {
     fun showContent()
     fun playVideo(id: String)
     fun initActionBar(title: String, subtitle:String)
+    fun shareRecipe(url: String, title: String)
 }

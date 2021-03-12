@@ -28,7 +28,7 @@ class IngredientsRVAdapter(val presenter: IIngredientsListPresenter) :
 
         override var pos = -1
 
-        override var addToCartClickListener: View.OnClickListener? = null
+        var addToCartClickListener: View.OnClickListener? = null
             set(value) {
                 containerView.checkBox_add_to_cart.setOnClickListener(value)
             }
