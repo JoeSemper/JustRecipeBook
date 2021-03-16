@@ -41,4 +41,5 @@ interface AppComponent {
     fun inject(cartPresenter: CartPresenter)
     fun inject(cartRVAdapter: CartRVAdapter)
     fun inject(ingredientDialog: IngredientDialogFragment)
+    fun inject(searchPresenter: SearchPresenter)
 }

@@ -22,6 +22,11 @@ class MainPresenter : MvpPresenter<MainView>() {
         return true
     }
 
+    fun onSearchClicked(): Boolean {
+        router.newRootScreen(Screens.SearchScreen())
+        return true
+    }
+
     fun onCategoriesClicked(): Boolean {
         router.newRootScreen(Screens.CategoriesScreen())
         return true

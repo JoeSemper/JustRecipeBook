@@ -32,8 +32,6 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     val ingredientsListPresenter = IngredientsListPresenter()
 
-    lateinit var allIngredients: List<Ingredient>
-
     class IngredientsListPresenter : IIngredientsListPresenter {
         val ingredients = mutableListOf<Ingredient>()
 
