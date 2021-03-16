@@ -1,50 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:fitsSystemWindows="false"
-    android:background="@color/divider_color"
-    tools:context=".ui.fragments.home.HomeFragment">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_home"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|snap"
-            app:title="Just Recipe Book" />
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view_meal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/textOnPrimary"
-            android:padding="4dp"
-            app:layout_scrollFlags="enterAlways"
-            android:theme="@style/SearchViewTheme" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_meals"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:spanCount="2"
-        tools:itemCount="20"
-        tools:listitem="@layout/item_meal" />
+    android:layout_height="match_parent">
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

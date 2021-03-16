@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface SearchFragmentView: MvpView {
     fun init()
+    fun updateList()
+    fun showResult(text: String)
 }

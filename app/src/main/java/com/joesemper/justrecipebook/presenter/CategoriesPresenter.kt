@@ -1,8 +1,8 @@
 package com.joesemper.justrecipebook.presenter
 
-import com.joesemper.justrecipebook.data.DataManager
-import com.joesemper.justrecipebook.data.model.Area
-import com.joesemper.justrecipebook.data.model.Category
+import com.joesemper.justrecipebook.model.DataManager
+import com.joesemper.justrecipebook.model.entity.Area
+import com.joesemper.justrecipebook.model.entity.Category
 import com.joesemper.justrecipebook.presenter.list.IAreaListPresenter
 import com.joesemper.justrecipebook.ui.fragments.categories.CategoriesView
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoryItemView
@@ -127,13 +127,13 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
     private fun getCategoriesScreenByPosition(pos: Int): Screen {
         val query = categoriesListPresenter.categories[pos].strCategory
         val category = SearchType.CATEGORY
-        return Screens.HomeScreen(category, query)
+        return Screens.SearchScreen(category, query)
     }
 
     private fun getAreaScreenByPosition(pos: Int): Screen {
         val query = areasListPresenter.areas[pos].strArea
         val searchType = SearchType.AREA
-        return Screens.HomeScreen(searchType, query)
+        return Screens.SearchScreen(searchType, query)
     }
 
     fun backPressed(): Boolean {

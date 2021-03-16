@@ -1,11 +1,10 @@
 package com.joesemper.justrecipebook.presenter
 
-import com.joesemper.justrecipebook.data.DataManager
-import com.joesemper.justrecipebook.data.model.Ingredient
+import com.joesemper.justrecipebook.model.DataManager
+import com.joesemper.justrecipebook.model.entity.Ingredient
 import com.joesemper.justrecipebook.presenter.list.ICartListPresenter
 import com.joesemper.justrecipebook.ui.fragments.cart.CartView
 import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartItemView
-import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
 import com.joesemper.justrecipebook.ui.util.constants.Constants
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler

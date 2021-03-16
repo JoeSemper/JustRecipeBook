@@ -1,13 +1,13 @@
 package com.joesemper.justrecipebook.di
 
-import com.joesemper.justrecipebook.data.db.IDbManager
+import com.joesemper.justrecipebook.model.data.db.IDbManager
 import com.joesemper.justrecipebook.di.modules.*
 import com.joesemper.justrecipebook.presenter.*
 import com.joesemper.justrecipebook.ui.activities.MainActivity
 import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.dialog.ingredient.IngredientDialogFragment
-import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
+import com.joesemper.justrecipebook.ui.fragments.search.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import dagger.Component

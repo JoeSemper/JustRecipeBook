@@ -5,9 +5,9 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.BuildConfig
-import com.joesemper.justrecipebook.data.network.ApiManager
-import com.joesemper.justrecipebook.data.network.IApiManager
-import com.joesemper.justrecipebook.data.network.api.IDataSource
+import com.joesemper.justrecipebook.model.data.network.ApiManager
+import com.joesemper.justrecipebook.model.data.network.IApiManager
+import com.joesemper.justrecipebook.model.data.network.api.IDataSource
 import com.joesemper.justrecipebook.util.network.AndroidNetworkStatus
 import com.joesemper.justrecipebook.util.network.INetworkStatus
 import dagger.Module

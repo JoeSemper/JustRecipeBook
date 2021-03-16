@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
-import com.joesemper.justrecipebook.data.model.Meal
+import com.joesemper.justrecipebook.model.entity.Meal
 import com.joesemper.justrecipebook.presenter.MealPresenter
 import com.joesemper.justrecipebook.ui.fragments.dialog.ingredient.IngredientDialogFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.IngredientsInnerFragment

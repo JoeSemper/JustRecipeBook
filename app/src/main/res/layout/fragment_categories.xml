@@ -8,7 +8,7 @@
     android:background="@color/divider_color"
     android:fitsSystemWindows="false"
     android:layout_alignParentBottom="true"
-    tools:context=".ui.fragments.home.HomeFragment">
+    tools:context=".ui.fragments.search.SearchFragmentFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -19,7 +19,7 @@
             android:id="@+id/toolbar_recipe"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|snap"
+            app:layout_scrollFlags="enterAlways"
             app:title="Just Recipe Book" />
 
     </com.google.android.material.appbar.AppBarLayout>

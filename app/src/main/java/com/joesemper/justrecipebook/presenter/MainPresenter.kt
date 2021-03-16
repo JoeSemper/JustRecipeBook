@@ -14,16 +14,16 @@ class MainPresenter : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        router.replaceScreen(Screens.HomeScreen(SearchType.QUERY))
+        router.replaceScreen(Screens.HomeScreen())
     }
 
     fun onHomeClicked(): Boolean {
-        router.newRootScreen(Screens.HomeScreen(SearchType.QUERY))
+        router.newRootScreen(Screens.HomeScreen())
         return true
     }
 
     fun onSearchClicked(): Boolean {
-        router.newRootScreen(Screens.SearchScreen())
+        router.newRootScreen(Screens.SearchScreen(SearchType.QUERY))
         return true
     }
 
@@ -33,7 +33,7 @@ class MainPresenter : MvpPresenter<MainView>() {
     }
 
     fun onFavoriteClicked(): Boolean {
-        router.newRootScreen(Screens.HomeScreen(SearchType.FAVORITE))
+        router.newRootScreen(Screens.SearchScreen(SearchType.FAVORITE))
         return true
     }
 

@@ -1,8 +1,8 @@
 package com.joesemper.justrecipebook.presenter
 
-import com.joesemper.justrecipebook.data.DataManager
-import com.joesemper.justrecipebook.data.model.Ingredient
-import com.joesemper.justrecipebook.data.model.Meal
+import com.joesemper.justrecipebook.model.DataManager
+import com.joesemper.justrecipebook.model.entity.Ingredient
+import com.joesemper.justrecipebook.model.entity.Meal
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
@@ -13,7 +13,6 @@ import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
-import java.lang.Exception
 import javax.inject.Inject
 
 class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
