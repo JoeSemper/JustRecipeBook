@@ -32,7 +32,7 @@ class AriesInnerFragment(val presenter: CategoriesPresenter):Fragment(), AriesIn
     }
 
     override fun init() {
-        rv_areas.layoutManager = GridLayoutManager(context, 3)
+        rv_areas.layoutManager = GridLayoutManager(context, 2)
         rv_areas.setHasFixedSize(true)
         adapter = AreasRVAdapter(presenter.areasListPresenter)
         rv_areas.adapter = adapter

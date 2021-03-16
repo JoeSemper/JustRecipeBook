@@ -14,6 +14,7 @@ interface DataManager {
     fun getMealsByArea(area: String): Single<List<Meal>>
     fun getAllCategories(): Single<List<Category>>
     fun getAllAreas(): Single<List<Area>>
+    fun getAllIngredients(): Single<List<Ingredient>>
     fun getSingleRandomMeal(): Single<Meal>
     fun searchMealByName(query: String?): Single<List<Meal>>
     fun putMealToFavorite(meal: Meal): Completable

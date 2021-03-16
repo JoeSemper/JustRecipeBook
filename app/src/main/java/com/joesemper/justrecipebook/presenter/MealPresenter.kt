@@ -6,11 +6,14 @@ import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.presenter.list.IIngredientsListPresenter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealView
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
+import com.joesemper.justrecipebook.ui.util.constants.Constants.Companion.EXTENSION
+import com.joesemper.justrecipebook.ui.util.constants.Constants.Companion.INGREDIENT_IMG_BASE_URL
 import com.joesemper.justrecipebook.ui.util.constants.Constants.Companion.MEAL_BASE_URL
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import java.lang.Exception
 import javax.inject.Inject
 
 class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
@@ -29,6 +32,8 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     val ingredientsListPresenter = IngredientsListPresenter()
 
+    lateinit var allIngredients: List<Ingredient>
+
     class IngredientsListPresenter : IIngredientsListPresenter {
         val ingredients = mutableListOf<Ingredient>()
 
@@ -38,7 +43,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
         override fun bindView(view: IngredientItemView) {
             with(ingredients[view.pos]) {
-                ingredient.let {
+                strIngredient.let {
                     view.setIngredient(it)
                     view.loadImage(it)
                 }
@@ -111,7 +116,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     private fun mapIngredientsToCurrentMeal(cartIngredients: List<Ingredient>) {
         currentMeal.ingredients?.map { mealIngredient ->
             cartIngredients.forEach { cartIngredient ->
-                if (cartIngredient.ingredient == mealIngredient.ingredient) {
+                if (cartIngredient.strIngredient == mealIngredient.strIngredient) {
                     mealIngredient.inCart = true
                 }
             }
@@ -145,12 +150,23 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     }
 
     private fun setOnClickListeners() {
+        ingredientsListPresenter.itemClickListener = { item ->
+            displayIngredientData(item)
+        }
+
         ingredientsListPresenter.addToCartClickListener = { item ->
-            onAddToCartClicked(item)
+            addOrRemoveIngredientFromCart(item)
         }
     }
 
-    private fun onAddToCartClicked(item: IngredientItemView) {
+    private fun displayIngredientData(item: IngredientItemView) {
+        val currentIngredient = ingredientsListPresenter.ingredients[item.pos]
+        val url = INGREDIENT_IMG_BASE_URL + currentIngredient.strIngredient + EXTENSION
+        val title = currentIngredient.strIngredient
+        viewState.displayIngredientData(url, title)
+    }
+
+    private fun addOrRemoveIngredientFromCart(item: IngredientItemView) {
         if (!item.isInCart) {
             removeIngredientFromCart(item)
         } else {
@@ -164,7 +180,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
             .observeOn(mainThreadScheduler)
             .subscribe({
                 item.isInCart = true
-                viewState.showResult("${ingredient.ingredient} added to cart")
+                viewState.showResult("${ingredient.strIngredient} added to cart")
             }, {
                 logger.log(it)
             })
@@ -176,7 +192,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
             .observeOn(mainThreadScheduler)
             .subscribe({
                 item.isInCart = false
-                viewState.showResult("${ingredient.ingredient} removed from cart")
+                viewState.showResult("${ingredient.strIngredient} removed from cart")
             }, {
                 logger.log(it)
             })

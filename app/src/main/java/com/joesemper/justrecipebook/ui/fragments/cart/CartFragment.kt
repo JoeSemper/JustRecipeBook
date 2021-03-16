@@ -17,6 +17,7 @@ import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.presenter.CartPresenter
 import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartRVAdapter
+import com.joesemper.justrecipebook.ui.fragments.dialog.ingredient.IngredientDialogFragment
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.util.view.callback.SwipeCallback
 import kotlinx.android.synthetic.main.fragment_cart.*
@@ -124,6 +125,11 @@ class CartFragment : MvpAppCompatFragment(), CartView, BackButtonListener {
 
     override fun updateItem(pos: Int) {
         cartAdapter?.notifyItemRemoved(pos)
+    }
+
+    override fun displayIngredientData(imgUrl: String, title: String) {
+        val dialogFragment = IngredientDialogFragment.newInstance(imgUrl, title)
+        dialogFragment.show(childFragmentManager, "TAG")
     }
 
     override fun showContent() {

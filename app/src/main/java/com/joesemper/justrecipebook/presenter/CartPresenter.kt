@@ -6,6 +6,7 @@ import com.joesemper.justrecipebook.presenter.list.ICartListPresenter
 import com.joesemper.justrecipebook.ui.fragments.cart.CartView
 import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartItemView
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientItemView
+import com.joesemper.justrecipebook.ui.util.constants.Constants
 import com.joesemper.justrecipebook.util.logger.ILogger
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -38,7 +39,7 @@ class CartPresenter : MvpPresenter<CartView>() {
         override fun bindView(view: CartItemView) {
             val ingredient = cartIngredients[view.pos]
 
-            ingredient.ingredient.let {
+            ingredient.strIngredient.let {
                 view.setIngredient(it)
                 view.setImage(it)
             }
@@ -108,9 +109,19 @@ class CartPresenter : MvpPresenter<CartView>() {
     }
 
     private fun setOnClickListeners() {
+        cartListPresenter.itemClickListener = { cartItem ->
+            displayIngredientData(cartItem)
+        }
         cartListPresenter.checkBoxClickListener = { cartItem ->
             onCheckBoxClicked(cartItem)
         }
+    }
+
+    private fun displayIngredientData(item: CartItemView) {
+        val currentIngredient = cartListPresenter.cartIngredients[item.pos]
+        val url = Constants.INGREDIENT_IMG_BASE_URL + currentIngredient.strIngredient + Constants.EXTENSION
+        val title = currentIngredient.strIngredient
+        viewState.displayIngredientData(url, title)
     }
 
     private fun onCheckBoxClicked(cartItem: CartItemView) {

@@ -20,6 +20,7 @@ import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
 import com.joesemper.justrecipebook.data.model.Meal
 import com.joesemper.justrecipebook.presenter.MealPresenter
+import com.joesemper.justrecipebook.ui.fragments.dialog.ingredient.IngredientDialogFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.IngredientsInnerFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.IngredientsInnerView
 import com.joesemper.justrecipebook.ui.fragments.meal.inner.InstructionInnerFragment
@@ -165,6 +166,11 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
         } catch (ex: ActivityNotFoundException) {
             context.startActivity(webIntent);
         }
+    }
+
+    override fun displayIngredientData(imgUrl: String, title: String) {
+        val dialogFragment = IngredientDialogFragment.newInstance(imgUrl, title)
+        dialogFragment.show(childFragmentManager, "TAG")
     }
 
     private fun executeInjection() {

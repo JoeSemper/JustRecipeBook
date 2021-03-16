@@ -2,6 +2,7 @@ package com.joesemper.justrecipebook.data.network.api
 
 import com.joesemper.justrecipebook.data.model.Areas
 import com.joesemper.justrecipebook.data.model.Categories
+import com.joesemper.justrecipebook.data.model.Ingredients
 import com.joesemper.justrecipebook.data.model.Meals
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
@@ -31,4 +32,6 @@ interface IDataSource {
     @GET("list.php?")
     fun getAllAreas(@Query("a") param: String = "list"): Single<Areas>
 
+    @GET("list.php")
+    fun getAllIngredients(@Query("i") param: String = "list"): Single<Ingredients>
 }

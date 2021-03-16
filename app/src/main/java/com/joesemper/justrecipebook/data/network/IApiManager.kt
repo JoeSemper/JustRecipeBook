@@ -1,9 +1,6 @@
 package com.joesemper.justrecipebook.data.network
 
-import com.joesemper.justrecipebook.data.model.Area
-import com.joesemper.justrecipebook.data.model.Category
-import com.joesemper.justrecipebook.data.model.Meal
-import com.joesemper.justrecipebook.data.model.Meals
+import com.joesemper.justrecipebook.data.model.*
 import io.reactivex.rxjava3.core.Single
 
 interface IApiManager {
@@ -13,6 +10,7 @@ interface IApiManager {
     fun getMealsByArea(area: String): Single<List<Meal>>
     fun getAllCategories(): Single<List<Category>>
     fun getAllAreas(): Single<List<Area>>
+    fun getAllIngredients(): Single<List<Ingredient>>
     fun getSingleRandomMeal(): Single<Meal>
     fun searchMealsByName(query: String?): Single<List<Meal>>
 }

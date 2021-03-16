@@ -14,7 +14,7 @@ class ApiManager(val api: IDataSource) : IApiManager {
     override fun getMealById(id: String): Single<Meal> {
         return api.getMealById(id).flatMap { meals ->
             Single.fromCallable {
-                mapIngredientsToList(meals.meals[0])
+                mapIngredientsToList(meals.meals.first())
             }
         }.subscribeOn(Schedulers.io())
     }
@@ -67,6 +67,30 @@ class ApiManager(val api: IDataSource) : IApiManager {
         }.subscribeOn(Schedulers.io())
     }
 
+    override fun getAllIngredients(): Single<List<Ingredient>> {
+        return api.getAllIngredients().flatMap { ingredients ->
+            Single.fromCallable {
+                ingredients.meals.toList()
+            }
+        }.subscribeOn(Schedulers.io())
+    }
+
+    private fun addIngredientsDescription(meal: Meal): Single<Meal> {
+        mapIngredientsToList(meal)
+        return getAllIngredients().flatMap { ingredients ->
+            Single.fromCallable {
+                ingredients.map { ingredient ->
+                    meal.ingredients?.map { currentIngredient ->
+                        if (currentIngredient.strIngredient == ingredient.strIngredient) {
+                            currentIngredient.strDescription = ingredient.strDescription
+                        }
+                    }
+                }
+                meal
+            }
+        }
+    }
+
     private fun mapIngredientsToList(meal: Meal): Meal {
         with(meal) {
             ingredients = mutableListOf()
@@ -98,9 +122,15 @@ class ApiManager(val api: IDataSource) : IApiManager {
 
     private fun addIngredientToList(meal: Meal, ingredient: String?, measure: String?) {
         if (checkIngredientNotNull(ingredient)) {
-            meal.ingredients?.add(Ingredient(ingredient!!, measure))
+            meal.ingredients?.add(
+                Ingredient(
+                    strIngredient = ingredient!!,
+                    measure = measure
+                )
+            )
         }
     }
+
 
     private fun checkIngredientNotNull(ingredient: String?) = (ingredient != "")
 

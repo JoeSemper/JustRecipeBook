@@ -51,4 +51,6 @@ class AppDataManager(val apiManager: IApiManager, val cache: IDbManager) : DataM
     override fun deleteAllIngredients() = cache.deleteAllCartIngredients()
 
     override fun deleteBoughtIngredients() = cache.deleteBoughtIngredients()
+
+    override fun getAllIngredients() = apiManager.getAllIngredients()
 }

@@ -13,4 +13,5 @@ interface CartView: MvpView {
     fun showResult(text: String)
     fun createDeleteDialog()
     fun vibrate()
+    fun displayIngredientData(imgUrl: String, title: String)
 }
