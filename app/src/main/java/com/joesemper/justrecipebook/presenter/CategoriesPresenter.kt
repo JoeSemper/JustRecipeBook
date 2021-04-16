@@ -127,13 +127,13 @@ class CategoriesPresenter : MvpPresenter<CategoriesView>() {
     private fun getCategoriesScreenByPosition(pos: Int): Screen {
         val query = categoriesListPresenter.categories[pos].strCategory
         val category = SearchType.CATEGORY
-        return Screens.SearchScreen(category, query)
+        return Screens.HomeScreen(category, query)
     }
 
     private fun getAreaScreenByPosition(pos: Int): Screen {
         val query = areasListPresenter.areas[pos].strArea
         val searchType = SearchType.AREA
-        return Screens.SearchScreen(searchType, query)
+        return Screens.HomeScreen(searchType, query)
     }
 
     fun backPressed(): Boolean {

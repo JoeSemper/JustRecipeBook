@@ -7,7 +7,7 @@ import com.joesemper.justrecipebook.ui.activities.MainActivity
 import com.joesemper.justrecipebook.ui.fragments.cart.adapter.CartRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.categories.adapter.CategoriesRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.dialog.ingredient.IngredientDialogFragment
-import com.joesemper.justrecipebook.ui.fragments.search.adapter.MealsRVAdapter
+import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.fragments.meal.MealFragment
 import com.joesemper.justrecipebook.ui.fragments.meal.adapter.IngredientsRVAdapter
 import dagger.Component
@@ -41,5 +41,4 @@ interface AppComponent {
     fun inject(cartPresenter: CartPresenter)
     fun inject(cartRVAdapter: CartRVAdapter)
     fun inject(ingredientDialog: IngredientDialogFragment)
-    fun inject(searchPresenter: SearchPresenter)
 }

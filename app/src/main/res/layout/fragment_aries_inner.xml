@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentBottom="true"
     android:fitsSystemWindows="false"
-    tools:context=".ui.fragments.search.SearchFragmentFragment">
+    tools:context=".ui.fragments.home.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_areas"

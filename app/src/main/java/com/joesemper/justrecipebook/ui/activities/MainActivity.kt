@@ -44,7 +44,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
             when (menuItem.itemId) {
                 R.id.navigation_home -> presenter.onHomeClicked()
-                R.id.navigation_search -> presenter.onSearchClicked()
                 R.id.navigation_categories -> presenter.onCategoriesClicked()
                 R.id.navigation_favorites -> presenter.onFavoriteClicked()
                 R.id.navigation_cart -> presenter.onCartClicked()

@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
     android:fitsSystemWindows="false"
-    android:background="@color/divider_color"
-    tools:context=".ui.fragments.search.SearchFragmentFragment">
+    tools:context=".ui.fragments.home.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

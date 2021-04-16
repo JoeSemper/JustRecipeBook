@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
-
-    <item
-        android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search" />
+        android:title="@string/home" />
 
     <item
         android:id="@+id/navigation_categories"
         android:icon="@drawable/ic_baseline_list_24"
-        android:title="Categories" />
+        android:title="@string/categories" />
 
     <item
         android:id="@+id/navigation_favorites"
         android:icon="@drawable/ic_baseline_star_24"
-        android:title="Favorites" />
+        android:title="@string/favorites" />
 
     <item
         android:id="@+id/navigation_cart"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
-        android:title="Cart" />
+        android:title="@string/cart" />
 </menu>

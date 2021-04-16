@@ -7,7 +7,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentBottom="true"
     android:fitsSystemWindows="false"
-    android:background="@color/divider_color"
     tools:context=".ui.fragments.meal.MealFragment">
 
     <com.google.android.material.appbar.AppBarLayout

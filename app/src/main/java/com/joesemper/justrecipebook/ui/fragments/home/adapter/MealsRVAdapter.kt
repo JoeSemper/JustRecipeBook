@@ -1,4 +1,4 @@
-package com.joesemper.justrecipebook.ui.fragments.search.adapter
+package com.joesemper.justrecipebook.ui.fragments.home.adapter
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
