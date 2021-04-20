@@ -1,10 +1,14 @@
 package com.joesemper.justrecipebook.ui.fragments.home
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.GONE
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.joesemper.justrecipebook.App
 import com.joesemper.justrecipebook.R
@@ -12,7 +16,7 @@ import com.joesemper.justrecipebook.presenter.HomePresenter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.util.constants.SearchType
-import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -47,22 +51,13 @@ class HomeFragment : MvpAppCompatFragment(), HomeFragmentView, BackButtonListene
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
-        return View.inflate(context, R.layout.fragment_search, null)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_home, menu)
-        val item = menu.findItem(R.id.action_search)
-        val searchView = item.actionView as SearchView
-
-        initSearch(searchView)
+        return View.inflate(context, R.layout.fragment_main, null)
     }
 
     override fun init() {
         initRV()
         initActionBar()
+        initSearch()
     }
 
     private fun initRV() {
@@ -77,15 +72,12 @@ class HomeFragment : MvpAppCompatFragment(), HomeFragmentView, BackButtonListene
 
     }
 
-    private fun initSearch(searchView: SearchView) {
-        val listener = QueryListener(presenter, searchView)
-        searchView.setOnQueryTextListener(listener)
-//        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
-        searchView.setIconifiedByDefault(false)
-        search_view.setIconifiedByDefault(false)
-        search_view.queryHint = "meal, ingredient ..."
-        search_view.setOnQueryTextListener(listener)
+    private fun initSearch() {
+        text_input_layout_search.setEndIconOnClickListener {
+            val query = text_input_search.text.toString()
+            hideKeyboard(it)
+            presenter.onSearch(query)
+        }
     }
 
     private fun initActionBar() {
@@ -102,19 +94,18 @@ class HomeFragment : MvpAppCompatFragment(), HomeFragmentView, BackButtonListene
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
-    override fun backPressed(): Boolean = presenter.backPressed()
+    override fun hideSearch() {
+        text_input_layout_search.visibility = GONE
+    }
 
-    private class QueryListener(val presenter: HomePresenter, val searchView: SearchView) :
-        SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            presenter.onSearch(query)
-            searchView.clearFocus()
-            return true
-        }
-
-        override fun onQueryTextChange(newText: String?): Boolean {
-            presenter.onSearch(newText)
-            return true
+    private fun hideKeyboard(view: View) {
+        if (view.isFocused) {
+            view.clearFocus()
+            val manager =
+                ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+            manager?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
+    override fun backPressed(): Boolean = presenter.backPressed()
 }

@@ -98,6 +98,7 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
     }
 
     private fun getFavoriteMeals() {
+        viewState.hideSearch()
         dataManager.getFavoriteMeals()
             .observeOn(mainThreadScheduler)
             .subscribe({ meals->

@@ -63,11 +63,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            if (it is BackButtonListener && it.backPressed()) {
-                return
-            }
-        }
+//        supportFragmentManager.fragments.forEach {
+//            if (it is BackButtonListener && it.backPressed()) {
+//                return
+//            }
+//        }
         presenter.backClicked()
     }
 }

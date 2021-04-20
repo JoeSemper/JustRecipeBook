@@ -9,4 +9,5 @@ interface HomeFragmentView: MvpView {
     fun init()
     fun updateList()
     fun showResult(text: String)
+    fun hideSearch()
 }
