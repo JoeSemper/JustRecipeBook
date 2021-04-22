@@ -12,11 +12,12 @@ interface MealView: MvpView {
     fun initIngredients()
     fun initInstruction()
     fun setInstruction(text: String)
+    fun setInstructionHeader(text: String)
     fun updateIngredientsList()
     fun setIsFavorite(isFavorite: Boolean)
     fun showContent()
     fun playVideo(id: String)
-    fun initActionBar(title: String, subtitle:String)
+    fun initActionBar(title: String)
     fun shareRecipe(url: String, title: String)
     fun displayIngredientData(imgUrl: String, title: String)
 }

@@ -91,7 +91,7 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
         startActivity(Intent.createChooser(intent, "Share to"))
     }
 
-    override fun initActionBar(title: String, subtitle: String) {
+    override fun initActionBar(title: String) {
         with(activity as AppCompatActivity) {
             setSupportActionBar(toolbar_recipe)
             supportActionBar?.apply {
@@ -129,6 +129,10 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
 
     override fun setInstruction(text: String) {
         instructionInnerView?.setInstruction(text)
+    }
+
+    override fun setInstructionHeader(text: String) {
+        instructionInnerView?.setHeader(text)
     }
 
     override fun setImage(url: String) {
@@ -203,17 +207,20 @@ class MealFragment : MvpAppCompatFragment(), MealView, BackButtonListener {
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        private val ingredients = IngredientsInnerFragment.newInstance(presenter).apply {
+            ingredientsInnerView = this
+        }
+        private val instruction = InstructionInnerFragment.newInstance(presenter).apply {
+            instructionInnerView = this
+        }
+
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> IngredientsInnerFragment.newInstance(presenter).apply {
-                    ingredientsInnerView = this
-                }
-                1 -> InstructionInnerFragment.newInstance(presenter).apply {
-                    instructionInnerView = this
-                }
-                else -> IngredientsInnerFragment.newInstance(presenter)
+                0 -> ingredients
+                1 -> instruction
+                else -> ingredients
             }
         }
     }

@@ -58,6 +58,8 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        viewState.init()
+        displayMealData()
         loadFullMeal()
     }
 
@@ -73,26 +75,25 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
 
     private fun onMealLoaded(meal: Meal) {
         currentMeal = meal
-        viewState.init()
-        displayMealData(meal)
+        showIngredients()
+        showInstruction()
         setOnClickListeners()
     }
 
-    private fun displayMealData(meal: Meal) {
+    private fun displayMealData() {
         with(viewState) {
-            initActionBar(meal.strMeal, meal.strArea)
-            setImage(meal.strMealThumb)
+            initActionBar(currentMeal.strMeal)
+            setImage(currentMeal.strMealThumb)
         }
     }
 
-    fun onIngredientsReady() {
+    private fun showIngredients() {
         viewState.initIngredients()
         displayIngredientList()
     }
 
     private fun displayIngredientList() {
         loadCartIngredientsList()
-        viewState.showContent()
     }
 
     private fun loadCartIngredientsList() {
@@ -108,6 +109,7 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
     private fun onCartIngredientsLoaded(cartIngredients: List<Ingredient>) {
         mapIngredientsToCurrentMeal(cartIngredients)
         updateIngredientsList()
+        viewState.showContent()
     }
 
     private fun mapIngredientsToCurrentMeal(cartIngredients: List<Ingredient>) {
@@ -120,10 +122,11 @@ class MealPresenter(var currentMeal: Meal) : MvpPresenter<MealView>() {
         }
     }
 
-    fun onInstructionReady() {
+    private fun showInstruction() {
         with(viewState) {
             initInstruction()
             setInstruction(currentMeal.strInstructions)
+            setInstructionHeader(currentMeal.strMeal)
         }
     }
 

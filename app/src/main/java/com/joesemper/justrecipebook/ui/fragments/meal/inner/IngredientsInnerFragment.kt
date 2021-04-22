@@ -24,12 +24,7 @@ class IngredientsInnerFragment(val presenter: MealPresenter): Fragment(), Ingred
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = View.inflate(context, R.layout.fragment_ingredients_inner, null)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.onIngredientsReady()
-    }
+    ): View = View.inflate(context, R.layout.fragment_ingredients_inner, null)
 
     override fun init() {
         ingredientsAdapter = IngredientsRVAdapter(presenter.ingredientsListPresenter).apply {
