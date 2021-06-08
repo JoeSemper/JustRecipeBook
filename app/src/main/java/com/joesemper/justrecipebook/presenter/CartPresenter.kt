@@ -26,7 +26,7 @@ class CartPresenter : MvpPresenter<CartView>() {
     @Inject
     lateinit var logger: ILogger
 
-    val cartListPresenter = CartListPresenter()
+    var cartListPresenter = CartListPresenter()
 
     class CartListPresenter : ICartListPresenter {
         val cartIngredients = mutableListOf<Ingredient>()
@@ -51,6 +51,10 @@ class CartPresenter : MvpPresenter<CartView>() {
         }
 
         override fun getCount(): Int = cartIngredients.size
+
+        fun clearList() = cartIngredients.clear()
+        fun addIngredients(ingredients: List<Ingredient>) = cartIngredients.addAll(ingredients)
+        fun getIngredient(pos: Int) = cartIngredients[pos]
     }
 
     override fun onFirstViewAttach() {
@@ -61,7 +65,7 @@ class CartPresenter : MvpPresenter<CartView>() {
     }
 
     fun onItemSwiped(pos: Int){
-        val ingredient = cartListPresenter.cartIngredients[pos]
+        val ingredient = cartListPresenter.getIngredient(pos)
         viewState.vibrate()
         dataManager.deleteIngredient(ingredient).subscribe({
             loadCartIngredients()
@@ -102,8 +106,8 @@ class CartPresenter : MvpPresenter<CartView>() {
     }
 
     private fun updateCartList(ingredients: List<Ingredient>) {
-        cartListPresenter.cartIngredients.clear()
-        cartListPresenter.cartIngredients.addAll(ingredients)
+        cartListPresenter.clearList()
+        cartListPresenter.addIngredients(ingredients)
         viewState.updateList()
     }
 
