@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -81,8 +82,9 @@ class HomeFragment : MvpAppCompatFragment(), HomeFragmentView, BackButtonListene
     }
 
     private fun initActionBar() {
-        with(activity as AppCompatActivity) {
-            setSupportActionBar(toolbar_home)
+        with(requireActivity()) {
+            setActionBar(toolbar_home )
+//            setSupportActionBar(toolbar_home)
         }
     }
 

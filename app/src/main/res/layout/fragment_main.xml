@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:elevation="8dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <Toolbar
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

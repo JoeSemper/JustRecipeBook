@@ -1,8 +1,7 @@
 package com.joesemper.justrecipebook.ui.fragments.cart
 
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -21,7 +20,6 @@ import com.joesemper.justrecipebook.ui.fragments.dialog.ingredient.IngredientDia
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.util.view.callback.SwipeCallback
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_meal.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
