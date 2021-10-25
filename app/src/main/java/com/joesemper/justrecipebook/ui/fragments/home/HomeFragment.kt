@@ -16,6 +16,7 @@ import com.joesemper.justrecipebook.presenter.HomePresenter
 import com.joesemper.justrecipebook.ui.fragments.home.adapter.MealsRVAdapter
 import com.joesemper.justrecipebook.ui.interfaces.BackButtonListener
 import com.joesemper.justrecipebook.ui.util.constants.SearchType
+import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -84,6 +85,10 @@ class HomeFragment : MvpAppCompatFragment(), HomeFragmentView, BackButtonListene
         with(activity as AppCompatActivity) {
             setSupportActionBar(toolbar_home)
         }
+
+//        with(requireActivity()) {
+//            setActionBar(toolbar_home )
+//        }
     }
 
     override fun updateList() {
