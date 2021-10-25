@@ -1,5 +1,6 @@
 package com.joesemper.justrecipebook.presenter
 
+import androidx.annotation.VisibleForTesting
 import com.joesemper.justrecipebook.model.DataManager
 import com.joesemper.justrecipebook.model.entity.Meal
 import com.joesemper.justrecipebook.ui.fragments.home.HomeFragmentView
@@ -14,7 +15,7 @@ import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Screen
 import javax.inject.Inject
 
-class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresenter<HomeFragmentView>() {
+class HomePresenter(var searchType: SearchType?, val query: String?) : MvpPresenter<HomeFragmentView>() {
 
     @Inject
     lateinit var mainThreadScheduler: Scheduler
@@ -28,7 +29,7 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
     @Inject
     lateinit var logger: ILogger
 
-    val mealsListPresenter = MealsListPresenter()
+    var mealsListPresenter = MealsListPresenter()
 
     class MealsListPresenter : IMealsListPresenter {
         val meals = mutableListOf<Meal>()
@@ -42,6 +43,9 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
         }
 
         override fun getCount(): Int = meals.size
+
+        fun clearList() = meals.clear()
+        fun addMeals(meal: List<Meal>) = meals.addAll(meal)
     }
 
     override fun onFirstViewAttach() {
@@ -120,8 +124,8 @@ class HomePresenter(val searchType: SearchType?, val query: String?) : MvpPresen
     }
 
     private fun updateMealsList(meals: List<Meal>) {
-        mealsListPresenter.meals.clear()
-        mealsListPresenter.meals.addAll(meals)
+        mealsListPresenter.clearList()
+        mealsListPresenter.addMeals(meals)
         viewState.updateList()
     }
 
